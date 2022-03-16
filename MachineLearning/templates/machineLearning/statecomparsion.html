@@ -1,4 +1,6 @@
+{% extends 'machineLearning/index.html' %}
 {% load static %}
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-6" style="left: 0;
@@ -66,7 +68,7 @@
     margin-left: auto;
     margin-right: auto;">
 </canvas>
-<script>
+{% comment %} <script>
     let myChart = "";
     let stateFirst = "";
     let stateSecond = "";
@@ -335,4 +337,5 @@
 
 
     }
-</script>
+</script> {% endcomment %}
+{% endblock content %}
