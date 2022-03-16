@@ -1,0 +1,40 @@
+<div class="destinations" id="destinations">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_subtitle">simply amazing places</div>
+                <div class="section_title">
+                    <h2>State</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row destinations_row">
+            <div class="col">
+                <div class="destinations_container item_grid">
+
+                    {% comment %} {% for dest in dests %} {% endcomment %}
+                    {% for st in states %}
+                    <!-- Destination -->
+                    <div class="destination item">
+                        <div class="destination_image">
+                            <img src="{{st.img.url}}" alt="helloooo">
+                            <div class="spec_offer text-center"><a href="#">View</a></div>
+                        </div>
+                        <div class="destination_content">
+                            <div class="destination_title"><a href="destinations.html">{{st.name}}</a>
+                            </div>
+                            <div class="destination_subtitle">
+                                <p>{{st.desc}}</p>
+                            </div>
+                            <div class="destination_price">From ${{st.price}}</div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                    {% comment %} {% endfor %} {% endcomment %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
