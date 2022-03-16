@@ -26,7 +26,10 @@
 		<!-- Home -->
 		{% include 'home.html' %}
 
-		{% include 'machineLearning/statecomparison.html' %}
+		{% block content %}
+
+		{% endblock content %}
+
 
 		<!-- Footer -->
 		{% include 'footer.html' %}
@@ -34,6 +37,7 @@
 	</div>
 
 	{% include 'js-link/js.html' %}
+	{% comment %} <script src="ml/js/core.js"></script> {% endcomment %}
 </body>
 
 </html>

@@ -96,7 +96,8 @@ def seperatingData(df):
 
 
 def stateComparsion(request):
-    os.chdir("C:\\Users\\AQIB\\Downloads\\ML")
+    os.chdir("D:\\DataSet")
+    # os.chdir("C:\\Users\\AQIB\\Downloads\\ML")
     df = pd.read_csv("rainfall_in_india.csv")
     annual_rain_d, year_d = seperatingData(df)
     removingNull(df, annual_rain_d, year_d)
