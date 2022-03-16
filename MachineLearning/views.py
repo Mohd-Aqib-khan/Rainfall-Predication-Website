@@ -5,11 +5,12 @@ import os
 import numpy as np
 import pandas as pd
 
+
 def removingNull(df, annual_rain_d, year_d):
     annual_mean = 0
     nan_arr = 0
-    nan_jan =0
-    mean_jan =0
+    nan_jan = 0
+    mean_jan = 0
     for a in annual_rain_d.keys():
         srr = pd.DataFrame(annual_rain_d[a][0])
         jdata = pd.DataFrame(annual_rain_d[a][1])
@@ -50,35 +51,37 @@ def removingNull(df, annual_rain_d, year_d):
         oct_mean = (ocdata.mean())
         nov_mean = (nodata.mean())
         dec_mean = (dedata.mean())
-        if nan_arr !=0: 
+        if nan_arr != 0:
             df["ANNUAL"].fillna(int(annual_mean), limit=nan_arr, inplace=True)
-        if nan_jan !=0:
+        if nan_jan != 0:
             df["JAN"].fillna(int(jan_mean), limit=nan_jan, inplace=True)
-        if nan_feb !=0:
+        if nan_feb != 0:
             df["FEB"].fillna(int(feb_mean), limit=nan_feb, inplace=True)
-        if nan_mar !=0:
+        if nan_mar != 0:
             df["MAR"].fillna(int(mar_mean), limit=nan_mar, inplace=True)
-        if nan_apr !=0:
+        if nan_apr != 0:
             df["APR"].fillna(int(apr_mean), limit=nan_apr, inplace=True)
-        if nan_may !=0:
+        if nan_may != 0:
             df["MAY"].fillna(int(may_mean), limit=nan_may, inplace=True)
-        if nan_jun !=0:
+        if nan_jun != 0:
             df["JUN"].fillna(int(jun_mean), limit=nan_jun, inplace=True)
-        if nan_jul !=0:
+        if nan_jul != 0:
             df["JUL"].fillna(int(jul_mean), limit=nan_jul, inplace=True)
-        if nan_aug !=0:
+        if nan_aug != 0:
             df["AUG"].fillna(int(aug_mean), limit=nan_aug, inplace=True)
-        if nan_sep !=0:
+        if nan_sep != 0:
             df["SEP"].fillna(int(sep_mean), limit=nan_sep, inplace=True)
-        if nan_oct !=0:
+        if nan_oct != 0:
             df["OCT"].fillna(int(oct_mean), limit=nan_oct, inplace=True)
-        if nan_nov !=0:
+        if nan_nov != 0:
             df["NOV"].fillna(int(nov_mean), limit=nan_nov, inplace=True)
-        if nan_dec !=0:
+        if nan_dec != 0:
             df["DEC"].fillna(int(dec_mean), limit=nan_dec, inplace=True)
-        
+
+
 def seperatingData(df):
-    list_title = ["ANNUAL","JAN",'FEB',"MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]
+    list_title = ["ANNUAL", "JAN", 'FEB', "MAR", "APR", "MAY",
+                  "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
     annual_rain_d = {}
     year_d = {}
     for a in range(len(df["SUBDIVISION"])):
@@ -86,16 +89,18 @@ def seperatingData(df):
             annual_rain_d[df["SUBDIVISION"][a]] = [[]for i in range(13)]
             year_d[df["SUBDIVISION"][a]] = []
         for i_list_title in range(len(list_title)):
-            annual_rain_d[df["SUBDIVISION"][a]][i_list_title].append(df[list_title[i_list_title]][a])
+            annual_rain_d[df["SUBDIVISION"][a]][i_list_title].append(
+                df[list_title[i_list_title]][a])
         year_d[df["SUBDIVISION"][a]].append(df["YEAR"][a])
-    return annual_rain_d,year_d
+    return annual_rain_d, year_d
+
 
 def stateComparsion(request):
     os.chdir("C:\\Users\\AQIB\\Downloads\\ML")
     df = pd.read_csv("rainfall_in_india.csv")
-    annual_rain_d,year_d = seperatingData(df)
-    removingNull(df,annual_rain_d,year_d)
-    annual_rain_d,year_d = seperatingData(df)
+    annual_rain_d, year_d = seperatingData(df)
+    removingNull(df, annual_rain_d, year_d)
+    annual_rain_d, year_d = seperatingData(df)
     annual_data = simplejson.dumps(annual_rain_d)
     list_state = list(annual_rain_d.keys())
     data = {
@@ -104,5 +109,8 @@ def stateComparsion(request):
         "stateList": list_state
     }
     # return HttpResponse("Hello, world. You're at the polls index.")
-    return render(request, 'machineLearning/statecomparsion.html',{"data": data})
+    return render(request, 'machineLearning/statecomparsion.html', {"data": data})
 
+
+def index(request):
+    return render(request, 'machineLearning/index.html')
