@@ -1,123 +1,147 @@
-{% extends 'core/base.html' %}
 {% load static %}
-{% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6" style="left: 0;
-            right: 0;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            margin-left: auto;
-            margin-right: auto;" >
-                <h1>Annual RainFall Comparsion</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 " style="left: 0;
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" style="left: 0;
             right: 0;
             margin-top: 20px;
             margin-bottom: 20px;
             margin-left: auto;
             margin-right: auto;">
-                <div class="row justify-content-around">
-                    <div class="col-md-4"  style="text-align: center">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                              Select State First
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                {% for item in data.stateList %}
-                                     <li><button class="dropdown-item" type="button" onclick="check(1,{{forloop.counter0}})"><pre>{{item | safe}}</pre></button></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4" style="text-align: center;">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                            Select State Second
-                          </button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                              {% for item in data.stateList %}
-                                   <li><button class="dropdown-item" type="button" onclick="check(2,{{forloop.counter0}})"><pre>{{item | safe}}</pre></button></li>
-                              {% endfor %}
-                          </ul>
-                      </div>
+            <h1>Annual RainFall Comparsion</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 " style="left: 0;
+            right: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;">
+            <div class="row justify-content-around">
+                <div class="col-md-4" style="text-align: center">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Select State First
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            {% for item in data.stateList %}
+                            <li><button class="dropdown-item" type="button" onclick="check(1,{{forloop.counter0}})">
+                                    <pre>{{item | safe}}</pre></button></li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4" style="left: 0;
+                <div class="col-md-4" style="text-align: center;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Select State Second
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        {% for item in data.stateList %}
+                        <li><button class="dropdown-item" type="button" onclick="check(2,{{forloop.counter0}})">
+                                <pre>{{item | safe}}</pre></button></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="left: 0;
                     right: 0;
                     text-align: center;
                     margin-top: 20px;
                     margin-bottom: 20px;
                     margin-left: auto;
-                    margin-right: auto;"> 
-                        <button class="btn btn-primary" onclick="fetchData()">Fetch Data</button>
-                    </div>
-                </div>
-                
+                    margin-right: auto;">
+                <button class="btn btn-primary" onclick="fetchData()">Fetch Data</button>
             </div>
         </div>
+
     </div>
-    <canvas id="myChart" width="600" height="500" style="left: 0;
+</div>
+</div>
+<canvas id="myChart" width="600" height="500" style="left: 0;
     right: 0;
     margin-top: 54px;
     margin-left: auto;
     margin-right: auto;">
-    </canvas>
+</canvas>
 <script>
     let myChart = "";
     let stateFirst = "";
     let stateSecond = "";
-    let count =0;
-    function check(num,stateIndex){
-        let arr = {{data.stateList | safe}}
-        if(num==1){
+    let count = 0;
+
+    function check(num, stateIndex) {
+        let arr = {
+            {
+                data.stateList | safe
+            }
+        }
+        if (num == 1) {
             stateFirst = arr[stateIndex];
-        }else if(num==2){
+        } else if (num == 2) {
             stateSecond = arr[stateIndex];
         }
         console.log("state Name is :-", arr[stateIndex]);
     }
-    function fetchData(){
-        if(count==0){
-            count +=1;
-            dataset = {{ data.datasets | safe}};
+
+    function fetchData() {
+        if (count == 0) {
+            count += 1;
+            dataset = {
+                {
+                    data.datasets | safe
+                }
+            };
             const da1 = dataset[stateFirst][0];
             const da2 = dataset[stateSecond][0];
-            const year = {{data.year}};
+            const year = {
+                {
+                    data.year
+                }
+            };
             let data = [];
             let data2 = [];
-            console.log("data:-",data);
-            console.log("data2:-",data2);
+            console.log("data:-", data);
+            console.log("data2:-", data2);
             for (let i = 0; i < da1.length; i++) {
-                data.push({ x: year[i], y: da1[i] });
-            } 
+                data.push({
+                    x: year[i],
+                    y: da1[i]
+                });
+            }
             for (let i = 0; i < da2.length; i++) {
-                data2.push({ x: year[i], y: da2[i] });
-            } 
+                data2.push({
+                    x: year[i],
+                    y: da2[i]
+                });
+            }
 
             const totalDuration = 10000;
             const delayBetweenPoints = totalDuration / data.length;
-            const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+            const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart
+                .getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
             const ctx = document.getElementById('myChart').getContext('2d');
             myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     datasets: [{
-                        label: stateFirst,
-                        borderColor: '#166a8f',
-                        borderWidth: 1,
-                        radius: 3,
-                        data: data,
-                    },
-                    {
-                        label: stateSecond,
-                        borderColor: '#f67019',
-                        borderWidth: 1,
-                        radius: 3,
-                        data: data2,
-                    }]
+                            label: stateFirst,
+                            borderColor: '#166a8f',
+                            borderWidth: 1,
+                            radius: 3,
+                            data: data,
+                        },
+                        {
+                            label: stateSecond,
+                            borderColor: '#f67019',
+                            borderWidth: 1,
+                            radius: 3,
+                            data: data2,
+                        }
+                    ]
                 },
                 options: {
                     animation: {
@@ -155,11 +179,11 @@
                     plugins: {
                         legend: {
                             position: 'top',
-                          },
-                          title: {
+                        },
+                        title: {
                             display: true,
                             text: 'State Comparsion'
-                          },                   
+                        },
                     },
                     scales: {
                         x: {
@@ -168,45 +192,60 @@
                     }
                 }
             });
-        }
-        else{
+        } else {
             myChart.destroy();
-            dataset = {{ data.datasets | safe}};
+            dataset = {
+                {
+                    data.datasets | safe
+                }
+            };
             const da1 = dataset[stateFirst][0];
             const da2 = dataset[stateSecond][0];
-            const year = {{data.year}};
+            const year = {
+                {
+                    data.year
+                }
+            };
             let data = [];
             let data2 = [];
-            console.log("data:-",data);
-            console.log("data2:-",data2);
+            console.log("data:-", data);
+            console.log("data2:-", data2);
             for (let i = 0; i < da1.length; i++) {
-                data.push({ x: year[i], y: da1[i] });
-            } 
+                data.push({
+                    x: year[i],
+                    y: da1[i]
+                });
+            }
             for (let i = 0; i < da2.length; i++) {
-                data2.push({ x: year[i], y: da2[i] });
+                data2.push({
+                    x: year[i],
+                    y: da2[i]
+                });
             }
             const totalDuration = 10000;
             const delayBetweenPoints = totalDuration / data.length;
-            const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+            const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart
+                .getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
             const ctx = document.getElementById('myChart').getContext('2d');
 
             myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     datasets: [{
-                        label: stateFirst,
-                        borderColor: '#166a8f',
-                        borderWidth: 1,
-                        radius: 3,
-                        data: data,
-                    },
-                    {
-                        label: stateSecond,
-                        borderColor: '#f67019',
-                        borderWidth: 1,
-                        radius: 3,
-                        data: data2,
-                    }]
+                            label: stateFirst,
+                            borderColor: '#166a8f',
+                            borderWidth: 1,
+                            radius: 3,
+                            data: data,
+                        },
+                        {
+                            label: stateSecond,
+                            borderColor: '#f67019',
+                            borderWidth: 1,
+                            radius: 3,
+                            data: data2,
+                        }
+                    ]
                 },
                 options: {
                     animation: {
@@ -244,13 +283,13 @@
                     plugins: {
                         legend: {
                             position: 'top',
-                          },
-                          title: {
+                        },
+                        title: {
                             display: true,
                             text: 'State Comparsion'
-                          }
+                        }
                     },
-                    
+
                     scales: {
                         x: {
                             type: 'linear'
@@ -291,11 +330,10 @@
                         }
                     } 
             }
-            myChart.update('active'); */ 
+            myChart.update('active'); */
         }
 
-        
-         
+
+
     }
 </script>
-{% endblock content %}

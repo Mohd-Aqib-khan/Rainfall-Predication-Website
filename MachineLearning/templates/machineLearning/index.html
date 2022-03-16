@@ -1,5 +1,4 @@
 {% load static %}
-{% static "images" as baseUrl %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,18 +26,7 @@
 		<!-- Home -->
 		{% include 'home.html' %}
 
-
-		<!-- Destinations state -->
-
-		{% include 'state_card.html' %}
-
-		<!-- Testimonials section-->
-
-		{% include 'testimonial.html' %}
-
-		<!-- News section-->
-
-		{% include 'news.html' %}
+		{% include 'machineLearning/statecomparison.html' %}
 
 		<!-- Footer -->
 		{% include 'footer.html' %}
