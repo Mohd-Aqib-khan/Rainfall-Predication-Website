@@ -1,0 +1,301 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="left: 0;
+            right: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;" >
+                <h1>Annual RainFall Comparsion</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 " style="left: 0;
+            right: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;">
+                <div class="row justify-content-around">
+                    <div class="col-md-4"  style="text-align: center">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                              Select State First
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                {% for item in data.stateList %}
+                                     <li><button class="dropdown-item" type="button" onclick="check(1,{{forloop.counter0}})"><pre>{{item | safe}}</pre></button></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="text-align: center;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select State Second
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                              {% for item in data.stateList %}
+                                   <li><button class="dropdown-item" type="button" onclick="check(2,{{forloop.counter0}})"><pre>{{item | safe}}</pre></button></li>
+                              {% endfor %}
+                          </ul>
+                      </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" style="left: 0;
+                    right: 0;
+                    text-align: center;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    margin-left: auto;
+                    margin-right: auto;"> 
+                        <button class="btn btn-primary" onclick="fetchData()">Fetch Data</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <canvas id="myChart" width="600" height="500" style="left: 0;
+    right: 0;
+    margin-top: 54px;
+    margin-left: auto;
+    margin-right: auto;">
+    </canvas>
+<script>
+    let myChart = "";
+    let stateFirst = "";
+    let stateSecond = "";
+    let count =0;
+    function check(num,stateIndex){
+        let arr = {{data.stateList | safe}}
+        if(num==1){
+            stateFirst = arr[stateIndex];
+        }else if(num==2){
+            stateSecond = arr[stateIndex];
+        }
+        console.log("state Name is :-", arr[stateIndex]);
+    }
+    function fetchData(){
+        if(count==0){
+            count +=1;
+            dataset = {{ data.datasets | safe}};
+            const da1 = dataset[stateFirst][0];
+            const da2 = dataset[stateSecond][0];
+            const year = {{data.year}};
+            let data = [];
+            let data2 = [];
+            console.log("data:-",data);
+            console.log("data2:-",data2);
+            for (let i = 0; i < da1.length; i++) {
+                data.push({ x: year[i], y: da1[i] });
+            } 
+            for (let i = 0; i < da2.length; i++) {
+                data2.push({ x: year[i], y: da2[i] });
+            } 
+
+            const totalDuration = 10000;
+            const delayBetweenPoints = totalDuration / data.length;
+            const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+            const ctx = document.getElementById('myChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: stateFirst,
+                        borderColor: '#166a8f',
+                        borderWidth: 1,
+                        radius: 3,
+                        data: data,
+                    },
+                    {
+                        label: stateSecond,
+                        borderColor: '#f67019',
+                        borderWidth: 1,
+                        radius: 3,
+                        data: data2,
+                    }]
+                },
+                options: {
+                    animation: {
+                        x: {
+                            type: 'number',
+                            easing: 'linear',
+                            duration: delayBetweenPoints,
+                            from: NaN, // the point is initially skipped
+                            delay(ctx) {
+                                if (ctx.type !== 'data' || ctx.xStarted) {
+                                    return 0;
+                                }
+                                ctx.xStarted = true;
+                                return ctx.index * delayBetweenPoints;
+                            }
+                        },
+                        y: {
+                            type: 'number',
+                            easing: 'linear',
+                            duration: delayBetweenPoints,
+                            from: previousY,
+                            delay(ctx) {
+                                if (ctx.type !== 'data' || ctx.yStarted) {
+                                    return 0;
+                                }
+                                ctx.yStarted = true;
+                                return ctx.index * delayBetweenPoints;
+                            }
+                        }
+                    },
+                    responsive: false,
+                    interaction: {
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                          },
+                          title: {
+                            display: true,
+                            text: 'State Comparsion'
+                          },                   
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear'
+                        }
+                    }
+                }
+            });
+        }
+        else{
+            myChart.destroy();
+            dataset = {{ data.datasets | safe}};
+            const da1 = dataset[stateFirst][0];
+            const da2 = dataset[stateSecond][0];
+            const year = {{data.year}};
+            let data = [];
+            let data2 = [];
+            console.log("data:-",data);
+            console.log("data2:-",data2);
+            for (let i = 0; i < da1.length; i++) {
+                data.push({ x: year[i], y: da1[i] });
+            } 
+            for (let i = 0; i < da2.length; i++) {
+                data2.push({ x: year[i], y: da2[i] });
+            }
+            const totalDuration = 10000;
+            const delayBetweenPoints = totalDuration / data.length;
+            const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: stateFirst,
+                        borderColor: '#166a8f',
+                        borderWidth: 1,
+                        radius: 3,
+                        data: data,
+                    },
+                    {
+                        label: stateSecond,
+                        borderColor: '#f67019',
+                        borderWidth: 1,
+                        radius: 3,
+                        data: data2,
+                    }]
+                },
+                options: {
+                    animation: {
+                        x: {
+                            type: 'number',
+                            easing: 'linear',
+                            duration: delayBetweenPoints,
+                            from: NaN, // the point is initially skipped
+                            delay(ctx) {
+                                if (ctx.type !== 'data' || ctx.xStarted) {
+                                    return 0;
+                                }
+                                ctx.xStarted = true;
+                                return ctx.index * delayBetweenPoints;
+                            }
+                        },
+                        y: {
+                            type: 'number',
+                            easing: 'linear',
+                            duration: delayBetweenPoints,
+                            from: previousY,
+                            delay(ctx) {
+                                if (ctx.type !== 'data' || ctx.yStarted) {
+                                    return 0;
+                                }
+                                ctx.yStarted = true;
+                                return ctx.index * delayBetweenPoints;
+                            }
+                        }
+                    },
+                    responsive: false,
+                    interaction: {
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                          },
+                          title: {
+                            display: true,
+                            text: 'State Comparsion'
+                          }
+                    },
+                    
+                    scales: {
+                        x: {
+                            type: 'linear'
+                        }
+                    }
+                }
+            });
+
+
+
+            /*myChart.data.datasets[0].data = data; // Would update the first dataset's value of 'March' to be 50
+            myChart.data.datasets[1].data = data2;
+            myChart.options.animation = {
+                    x: {
+                        type: 'number',
+                        easing: 'easeOutQuart',
+                        duration: delayBetweenPoints,
+                        from: NaN, // the point is initially skipped
+                        delay(ctx) {
+                            if (ctx.type !== 'data' || ctx.xStarted) {
+                                return 0;
+                            }
+                            ctx.xStarted = true;
+                            return ctx.index * delayBetweenPoints;
+                        } 
+                    },
+                    y: {
+                        type: 'number',
+                        easing: 'easeOutQuart',
+                        duration: delayBetweenPoints,
+                        from: previousY,
+                        delay(ctx) {
+                            if (ctx.type !== 'data' || ctx.yStarted) {
+                                return 0;
+                            }
+                            ctx.yStarted = true;
+                            return ctx.index * delayBetweenPoints;
+                        }
+                    } 
+            }
+            myChart.update('active'); */ 
+        }
+
+        
+         
+    }
+</script>
+{% endblock content %}
