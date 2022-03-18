@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from core.models import State
 import json as simplejson
 import os
 import numpy as np
@@ -115,3 +115,8 @@ def stateComparsion(request):
 
 def index(request):
     return render(request, 'machineLearning/index.html')
+
+
+def state_view(request, sid):
+    s = State.objects.get(pk=sid)
+    return render(request, 'machineLearning/state_view.html', {"state": s})

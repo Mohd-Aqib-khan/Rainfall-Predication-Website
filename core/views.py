@@ -52,6 +52,11 @@ def index(request):
 
     st = State.objects.all()
 
+    # paginations
+    paginator = Paginator(st, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     l = []
     for state in st:
         l.append(state.name)
@@ -61,10 +66,6 @@ def index(request):
         'dests': dests,
         'states': st,
         'slider': sl,
+        "page_obj": page_obj
     }
     return render(request, "index.html", context)
-
-
-def state_view(request, sid):
-    s = State.objects.get(pk=sid)
-    return render(request, 'state_view.html', {"state": s})

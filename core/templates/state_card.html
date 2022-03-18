@@ -13,7 +13,7 @@
                 <div class="destinations_container item_grid">
 
                     {% comment %} {% for dest in dests %} {% endcomment %}
-                    {% for st in states %}
+                    {% for st in page_obj %}
                     <!-- Destination -->
                     <div class="destination item">
                         <div class="destination_image">
@@ -35,6 +35,14 @@
 
                 </div>
             </div>
+        </div>
+        <div>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a href=""></a>
+                </li>
+
+            </ul>
         </div>
     </div>
 </div>

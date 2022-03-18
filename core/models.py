@@ -28,4 +28,3 @@ st = State.objects.all()
 l = []
 for state in st:
     l.append(state.name)
-print(l)
