@@ -1,0 +1,13 @@
+{% extends 'core.html' %}
+{% load static %}
+{% block core %}
+<div class="container my-5 text-center">
+    <div class="card m-auto" style="width: 18rem;">
+        <img class="card-img-top" src="{{state.img.url}}" alt="Card image cap">
+        <h5 class="mt-2">{{state.name}}</h5>
+        <div class="card-body">
+            <p class="card-text">{{state.desc}}</p>
+        </div>
+    </div>
+</div>
+{% endblock core %}

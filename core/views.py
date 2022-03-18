@@ -11,25 +11,33 @@ def index(request):
              'NAGA MANI MIZO TRIPURA',
              'SUB HIMALAYAN WEST BENGAL & SIKKIM',
              'GANGETIC WEST BENGAL',
-             'ORISSA', 'JHARKHAND',
+             'ORISSA',
+             'JHARKHAND',
              'BIHAR',
-             'EAST UTTAR PRADESH', 'WEST UTTAR PRADESH',
+             'EAST UTTAR PRADESH',
+             'WEST UTTAR PRADESH',
              'UTTARAKHAND',
              'HARYANA DELHI & CHANDIGARH',
-             'PUNJAB', 'HIMACHAL PRADESH',
-             'JAMMU & KASHMIR', 'WEST RAJASTHAN',
+             'PUNJAB',
+             'HIMACHAL PRADESH',
+             'JAMMU & KASHMIR',
+             'WEST RAJASTHAN',
              'EAST RAJASTHAN',
              'WEST MADHYA PRADESH',
-             'EAST MADHYA PRADESH', 'GUJARAT REGION',
+             'EAST MADHYA PRADESH',
+             'GUJARAT REGION',
              'SAURASHTRA & KUTCH',
              'KONKAN & GOA',
-             'MADHYA MAHARASHTRA', 'MATATHWADA',
+             'MADHYA MAHARASHTRA',
+             'MATATHWADA',
              'VIDARBHA',
              'CHHATTISGARH',
-             'COASTAL ANDHRA PRADESH', 'TELANGANA',
+             'COASTAL ANDHRA PRADESH',
+             'TELANGANA',
              'RAYALSEEMA',
              'TAMIL NADU',
-             'COASTAL KARNATAKA', 'NORTH INTERIOR KARNATAKA',
+             'COASTAL KARNATAKA',
+             'NORTH INTERIOR KARNATAKA',
              'SOUTH INTERIOR KARNATAKA',
              'KERALA',
              'LAKSHADWEEP']
@@ -43,11 +51,20 @@ def index(request):
         dests[i].price = 700
 
     st = State.objects.all()
+
+    l = []
+    for state in st:
+        l.append(state.name)
+
     sl = Slider.objects.all()
     context = {
         'dests': dests,
         'states': st,
-        'slider': sl
-
+        'slider': sl,
     }
     return render(request, "index.html", context)
+
+
+def state_view(request, sid):
+    s = State.objects.get(pk=sid)
+    return render(request, 'state_view.html', {"state": s})

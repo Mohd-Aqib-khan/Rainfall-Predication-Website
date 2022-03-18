@@ -22,3 +22,10 @@ class State(models.Model):
 
 class Slider(models.Model):
     img = models.ImageField(upload_to='slider', default="")
+
+
+st = State.objects.all()
+l = []
+for state in st:
+    l.append(state.name)
+print(l)
