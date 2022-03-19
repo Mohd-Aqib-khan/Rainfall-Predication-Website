@@ -6,8 +6,6 @@ import numpy as np
 import pandas as pd
 
 
-
-
 def removingNull(df, annual_rain_d, year_d):
     annual_mean = 0
     nan_arr = 0
@@ -91,7 +89,8 @@ def seperatingData(df):
             annual_rain_d[df["SUBDIVISION"][a]] = [[]for i in range(13)]
             year_d[df["SUBDIVISION"][a]] = []
         for i_list_title in range(len(list_title)):
-            annual_rain_d[df["SUBDIVISION"][a]][i_list_title].append(df[list_title[i_list_title]][a])
+            annual_rain_d[df["SUBDIVISION"][a]][i_list_title].append(
+                df[list_title[i_list_title]][a])
         year_d[df["SUBDIVISION"][a]].append(df["YEAR"][a])
     return annual_rain_d, year_d
 
@@ -117,7 +116,7 @@ def index(request):
 def state_view(request, sid):
     #global annual_rain_d,annual_data, year_d, annual_bar_data
     s = State.objects.get(pk=sid)
-    os.chdir("C:\\Users\\AQIB\\Downloads\\ML")
+    os.chdir("D:\\DataSet")
     df = pd.read_csv("rainfall_in_india.csv")
     annual_rain_d, year_d = seperatingData(df)
     removingNull(df, annual_rain_d, year_d)
@@ -125,16 +124,19 @@ def state_view(request, sid):
     annual_data = simplejson.dumps(annual_rain_d)
     annual_bar_data = []
     list_state = list(annual_rain_d.keys())
-    print("stateName:-",s.name)
+    print("stateName:-", s.name)
     annual_rain_d[s.name].append(year_d[s.name])
     A_N_test = np.transpose(annual_rain_d[s.name])
     print(len(A_N_test))
     print(len(A_N_test[0]))
-    new_dataset = pd.DataFrame(A_N_test, columns=['Annual', 'Jan','FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL','AUG', 'SEP', 'OCT', 'NOV', 'DEC','YEAR'])
-    x = new_dataset[['Annual','Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC','YEAR']].values
+    new_dataset = pd.DataFrame(A_N_test, columns=[
+                               'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'YEAR'])
+    x = new_dataset[['Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY',
+                     'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'YEAR']].values
     x_d = x.tolist()
     json_x = simplejson.dumps(x_d)
-    json_columns = simplejson.dumps(['Annual','Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC','YEAR'])
+    json_columns = simplejson.dumps(
+        ['Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'YEAR'])
     bar_dataset = []
     for index in range(len(annual_rain_d[s.name])-1):
         bar_dataset.append(np.mean(annual_rain_d[s.name][index]))
@@ -142,9 +144,6 @@ def state_view(request, sid):
         annual_bar_data.append(np.mean(state[0]))
     json_bar_dataset = simplejson.dumps(bar_dataset)
     json_annual_bar_data = simplejson.dumps(annual_bar_data)
-    data = {"state": s, "year": year_d[s.name], "datasets": annual_data, "stateList": list_state, "state_data": json_x, "columns": json_columns, "json_bar_data": json_bar_dataset, "json_annual_bar_data": json_annual_bar_data}
+    data = {"state": s, "year": year_d[s.name], "datasets": annual_data, "stateList": list_state, "state_data": json_x,
+            "columns": json_columns, "json_bar_data": json_bar_dataset, "json_annual_bar_data": json_annual_bar_data}
     return render(request, 'machineLearning/state_view.html', {"data": data})
-
-
-
-

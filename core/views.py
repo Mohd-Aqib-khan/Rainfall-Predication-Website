@@ -51,17 +51,21 @@ def index(request):
         dests[i].price = 700
 
     st = State.objects.all()
+    print(len(st))
 
     # paginations
+
     paginator = Paginator(st, 6)
     page_number = request.GET.get('page')
+    print(page_number)
     page_obj = paginator.get_page(page_number)
-
     l = []
     for state in st:
         l.append(state.name)
+    print(len(l))
 
     sl = Slider.objects.all()
+
     context = {
         'dests': dests,
         'states': st,
@@ -69,3 +73,7 @@ def index(request):
         "page_obj": page_obj
     }
     return render(request, "index.html", context)
+
+
+def contact(request):
+    return render(request, 'contact.html')

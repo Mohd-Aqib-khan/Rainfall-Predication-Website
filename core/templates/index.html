@@ -1,51 +1,17 @@
+{% extends 'base.html' %}
 {% load static %}
-{% static "images" as baseUrl %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-	<title>Rainfall</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="Travello template project">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	{% include 'css-link/css.html' %}
-</head>
+{% block content %}
+<!-- Destinations state -->
 
-<body>
+{% include 'state_card.html' %}
 
-	<div class="super_container">
+<!-- Testimonials section-->
 
-		<!-- Header -->
+{% include 'testimonial.html' %}
 
-		{% include 'header.html' %}
+<!-- News section-->
 
-		<!-- Menu -->
+{% include 'news.html' %}
 
-		{% include 'menu.html' %}
-
-		<!-- Home -->
-		{% include 'home.html' %}
-
-
-		<!-- Destinations state -->
-
-		{% include 'state_card.html' %}
-
-		<!-- Testimonials section-->
-
-		{% include 'testimonial.html' %}
-
-		<!-- News section-->
-
-		{% include 'news.html' %}
-
-		<!-- Footer -->
-		{% include 'footer.html' %}
-
-	</div>
-
-	{% include 'js-link/js.html' %}
-</body>
-
-</html>
+{% endblock content %}

@@ -231,7 +231,7 @@ section {
 
 .header {
    position: fixed;
-   top: 10px;
+   /* top: 10px; */
    left: 0;
    width: 100%;
    z-index: 100;
@@ -251,7 +251,7 @@ section {
    transition: all 200ms ease;
 }
 .header.scrolled {
-   background: rgba(24, 24, 24, 0.6);
+   background: rgba(14, 11, 11, 0.6);
 }
 .header.scrolled .header_content {
    height: 90px;
@@ -1063,7 +1063,7 @@ section {
    margin-top: 18px;
 }
 .newsletter_form_container {
-   margin-top: 84px;
+   margin-top: 2.5rem;
 }
 .newsletter_input {
    width: 100%;
