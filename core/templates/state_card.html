@@ -31,18 +31,19 @@
                     </div>
 
                     {% endfor %}
-                    {% comment %} {% endfor %} {% endcomment %}
-
+                    <div class="page text-black" style="z-index:2;">
+                        <span>
+                            {% if page_obj.has_previous %}
+                            <a href="">Previous</a>
+                            {% endif %}
+                            <span>{{page_obj.number}}</span>
+                            {% if page_obj.has_next %}
+                            <a href="">Next</a>
+                            {% endif %}
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div>
-            <ul class="pagination">
-                <li class="page-item">
-                    <a href=""></a>
-                </li>
-
-            </ul>
         </div>
     </div>
 </div>
