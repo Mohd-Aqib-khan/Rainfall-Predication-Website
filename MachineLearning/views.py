@@ -97,7 +97,11 @@ def seperatingData(df):
 
 def stateComparsion(request):
     # os.chdir("D:\\DataSet")
-    global annual_rain_d, year_d
+    os.chdir("D:\\DataSet")
+    df = pd.read_csv("rainfall_in_india.csv")
+    annual_rain_d, year_d = seperatingData(df)
+    removingNull(df, annual_rain_d, year_d)
+    annual_rain_d, year_d = seperatingData(df)
     annual_data = simplejson.dumps(annual_rain_d)
     list_state = list(annual_rain_d.keys())
     data = {
