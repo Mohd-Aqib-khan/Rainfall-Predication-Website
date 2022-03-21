@@ -33,16 +33,8 @@
   </div>
 </div>
 <script>
-  let annual_bar_data = {
-    {
-      data.json_annual_bar_data
-    }
-  };
-  const state_list = {
-    {
-      data.stateList | safe
-    }
-  };
+  let annual_bar_data = {{data.json_annual_bar_data}};
+  const state_list = {{data.stateList | safe}};
   const ctxLine2 = document.getElementById('myAnnualRainLineChart').getContext('2d');
   const myAnnualRainLineChart = new Chart(ctxLine2, {
     type: 'bar',
@@ -94,11 +86,7 @@
   });
 </script>
 <script>
-  let pie_data = {
-    {
-      data.json_bar_data
-    }
-  };
+  let pie_data = {{data.json_bar_data }};
   pie_data.shift();
   const ctxPie = document.getElementById('myChartPie').getContext('2d');
   const myChartPie = new Chart(ctxPie, {
@@ -139,11 +127,7 @@
   });
 </script>
 <script>
-  let bar_data = {
-    {
-      data.json_bar_data
-    }
-  };
+  let bar_data = {{data.json_bar_data}};
   bar_data.shift();
   const ctxLine = document.getElementById('myChartLine').getContext('2d');
   const myChartLine = new Chart(ctxLine, {
@@ -196,21 +180,9 @@
   });
 </script>
 <script>
-  console.log({
-    {
-      data.state_data
-    }
-  });
-  const dataset = {
-    {
-      data.state_data
-    }
-  };
-  const col = {
-    {
-      data.columns | safe
-    }
-  };
+  console.log({{data.state_data}});
+  const dataset = {{data.state_data}};
+  const col = {{data.columns | safe}};
   const grid = new gridjs.Grid({
     columns: col,
     data: dataset,
@@ -236,17 +208,9 @@
   }).render(document.getElementById("wrapper"));
 </script>
 <script>
-  const datase = {
-    {
-      data.datasets | safe
-    }
-  };
+  const datase = {{data.datasets | safe}};
   const da1 = datase["ANDAMAN & NICOBAR ISLANDS"][0];
-  const year = {
-    {
-      data.year
-    }
-  };
+  const year = {{data.year}};
   let data = [];
   for (let i = 0; i < da1.length; i++) {
     data.push({
