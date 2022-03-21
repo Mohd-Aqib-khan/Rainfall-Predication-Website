@@ -1,5 +1,4 @@
 {% load static %}
-{% static "images" as baseUrl %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,18 +26,10 @@
 		<!-- Home -->
 		{% include 'home.html' %}
 
+		{% block content %}
 
-		<!-- Destinations state -->
+		{% endblock content %}
 
-		{% include 'state_card.html' %}
-
-		<!-- Testimonials section-->
-
-		{% include 'testimonial.html' %}
-
-		<!-- News section-->
-
-		{% include 'news.html' %}
 
 		<!-- Footer -->
 		{% include 'footer.html' %}
@@ -46,6 +37,7 @@
 	</div>
 
 	{% include 'js-link/js.html' %}
+	{% comment %} <script src="ml/js/core.js"></script> {% endcomment %}
 </body>
 
 </html>
