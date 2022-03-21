@@ -7,12 +7,12 @@
                         <div class="logo"><a href="{% url 'home' %}">Rainfall</a></div>
                         <nav class="main_nav">
                             <ul class="d-flex flex-row align-items-start justify-content-start">
-                                <li class="active"><a href=" {% url 'home' %} ">Home</a></li>
-                                <li><a href="about.html">About us</a></li>
+                                <li class="{{home}}"><a href=" {% url 'home' %} ">Home</a></li>
                                 <li><a href="#">Services</a></li>
                                 <li><a href="{% url 'statecmp' %}">State Comparsion</a></li>
-                                <li><a href="#news">News</a></li>
-                                <li><a href=" {% url 'contact' %}  ">Contact</a></li>
+                                <li class="header_news"><a href="#news">News</a></li>
+                                <li class="{{contact}}"><a href=" {% url 'contact' %}  ">Contact</a></li>
+                                <li class="{{about}}"><a href="{% url 'about' %}">About us</a></li>
                             </ul>
                         </nav>
 

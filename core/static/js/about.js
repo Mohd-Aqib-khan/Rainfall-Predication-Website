@@ -13,8 +13,7 @@
 
 ******************************/
 
-$(document).ready(function()
-{
+$(document).ready(function () {
 	"use strict";
 
 	/* 
@@ -32,18 +31,15 @@ $(document).ready(function()
 
 	setHeader();
 
-	$(window).on('resize', function()
-	{
+	$(window).on('resize', function () {
 		setHeader();
 
-		setTimeout(function()
-		{
+		setTimeout(function () {
 			$(window).trigger('resize.px.parallax');
 		}, 375);
 	});
 
-	$(document).on('scroll', function()
-	{
+	$(document).on('scroll', function () {
 		setHeader();
 	});
 
@@ -57,15 +53,11 @@ $(document).ready(function()
 
 	*/
 
-	function setHeader()
-	{
-		if($(window).scrollTop() > 127)
-		{
+	function setHeader() {
+		if ($(window).scrollTop() > 127) {
 			header.addClass('scrolled');
 			headerSocial.addClass('scrolled');
-		}
-		else
-		{
+		} else {
 			header.removeClass('scrolled');
 			headerSocial.removeClass('scrolled');
 		}
@@ -77,47 +69,35 @@ $(document).ready(function()
 
 	*/
 
-	function initMenu()
-	{
-		if($('.menu').length)
-		{
+	function initMenu() {
+		if ($('.menu').length) {
 			var menu = $('.menu');
-			if($('.hamburger').length)
-			{
-				burger.on('click', function()
-				{
-					if(menuActive)
-					{
+			if ($('.hamburger').length) {
+				burger.on('click', function () {
+					if (menuActive) {
 						closeMenu();
-					}
-					else
-					{
+					} else {
 						openMenu();
 					}
 				});
 			}
 		}
-		if($('.menu_close').length)
-		{
+		if ($('.menu_close').length) {
 			var close = $('.menu_close');
-			close.on('click', function()
-			{
-				if(menuActive)
-				{
+			close.on('click', function () {
+				if (menuActive) {
 					closeMenu();
 				}
 			});
 		}
 	}
 
-	function openMenu()
-	{
+	function openMenu() {
 		menu.addClass('active');
 		menuActive = true;
 	}
 
-	function closeMenu()
-	{
+	function closeMenu() {
 		menu.removeClass('active');
 		menuActive = false;
 	}
@@ -128,38 +108,42 @@ $(document).ready(function()
 
 	*/
 
-	function initInput()
-	{
-		if($('.newsletter_input').length)
-		{
+	function initInput() {
+		if ($('.newsletter_input').length) {
 			var inpt = $('.newsletter_input');
-			inpt.each(function()
-			{
+			inpt.each(function () {
 				var ele = $(this);
 				var border = ele.next();
 
-				ele.focus(function()
-				{
-					border.css({'visibility': "visible", 'opacity': "1"});
+				ele.focus(function () {
+					border.css({
+						'visibility': "visible",
+						'opacity': "1"
+					});
 				});
-				ele.blur(function()
-				{
-					border.css({'visibility': "hidden", 'opacity': "0"});
+				ele.blur(function () {
+					border.css({
+						'visibility': "hidden",
+						'opacity': "0"
+					});
 				});
 
-				ele.on("mouseenter", function()
-				{
-					border.css({'visibility': "visible", 'opacity': "1"});
+				ele.on("mouseenter", function () {
+					border.css({
+						'visibility': "visible",
+						'opacity': "1"
+					});
 				});
 
-				ele.on("mouseleave", function()
-				{
-					if(!ele.is(":focus"))
-					{
-						border.css({'visibility': "hidden", 'opacity': "0"});
+				ele.on("mouseleave", function () {
+					if (!ele.is(":focus")) {
+						border.css({
+							'visibility': "hidden",
+							'opacity': "0"
+						});
 					}
 				});
-				
+
 			});
 		}
 	}
@@ -170,54 +154,48 @@ $(document).ready(function()
 
 	*/
 
-	function initMilestones()
-	{
-		if($('.milestone_counter').length)
-		{
+	function initMilestones() {
+		if ($('.milestone_counter').length) {
 			var milestoneItems = $('.milestone_counter');
 
-	    	milestoneItems.each(function(i)
-	    	{
-	    		var ele = $(this);
-	    		var endValue = ele.data('end-value');
-	    		var eleValue = ele.text();
+			milestoneItems.each(function (i) {
+				var ele = $(this);
+				var endValue = ele.data('end-value');
+				var eleValue = ele.text();
 
-	    		/* Use data-sign-before and data-sign-after to add signs
-	    		infront or behind the counter number (+, k, etc) */
-	    		var signBefore = "";
-	    		var signAfter = "";
+				/* Use data-sign-before and data-sign-after to add signs
+				infront or behind the counter number (+, k, etc) */
+				var signBefore = "";
+				var signAfter = "";
 
-	    		if(ele.attr('data-sign-before'))
-	    		{
-	    			signBefore = ele.attr('data-sign-before');
-	    		}
+				if (ele.attr('data-sign-before')) {
+					signBefore = ele.attr('data-sign-before');
+				}
 
-	    		if(ele.attr('data-sign-after'))
-	    		{
-	    			signAfter = ele.attr('data-sign-after');
-	    		}
+				if (ele.attr('data-sign-after')) {
+					signAfter = ele.attr('data-sign-after');
+				}
 
-	    		var milestoneScene = new ScrollMagic.Scene({
-		    		triggerElement: this,
-		    		triggerHook: 'onEnter',
-		    		reverse:false
-		    	})
-		    	.on('start', function()
-		    	{
-		    		var counter = {value:eleValue};
-		    		var counterTween = TweenMax.to(counter, 4,
-		    		{
-		    			value: endValue,
-		    			roundProps:"value", 
-						ease: Circ.easeOut, 
-						onUpdate:function()
-						{
-							document.getElementsByClassName('milestone_counter')[i].innerHTML = signBefore + counter.value + signAfter;
-						}
-		    		});
-		    	})
-			    .addTo(ctrl);
-	    	});
+				var milestoneScene = new ScrollMagic.Scene({
+						triggerElement: this,
+						triggerHook: 'onEnter',
+						reverse: false
+					})
+					.on('start', function () {
+						var counter = {
+							value: eleValue
+						};
+						var counterTween = TweenMax.to(counter, 4, {
+							value: endValue,
+							roundProps: "value",
+							ease: Circ.easeOut,
+							onUpdate: function () {
+								document.getElementsByClassName('milestone_counter')[i].innerHTML = signBefore + counter.value + signAfter;
+							}
+						});
+					})
+					.addTo(ctrl);
+			});
 		}
 	}
 });

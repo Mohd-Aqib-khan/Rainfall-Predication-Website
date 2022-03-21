@@ -67,6 +67,7 @@ def index(request):
     sl = Slider.objects.all()
 
     context = {
+        'home': "active",
         'dests': dests,
         'states': st,
         'slider': sl,
@@ -76,4 +77,9 @@ def index(request):
 
 
 def contact(request):
-    return render(request, 'contact.html')
+
+    return render(request, 'contact.html', {'contact': "active"})
+
+
+def about(request):
+    return render(request, 'about.html', {'about': "active"})
