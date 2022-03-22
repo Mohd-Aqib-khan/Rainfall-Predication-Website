@@ -2,43 +2,41 @@
 {% load static %}
 {% block content %}
 
-<div class="container d-flex flex-column">
+<div class="container d-flex flex-column" id="stateView">
     <h5 class="mt-4 text-center border border-warning text-dark py-3">{{data.state.name}}</h5>
 
 
-    <div class="row align-self-center" style="margin: 0px">
-      <div class="col-lg-10 my-5">
-        <canvas id="myChart" width="700" height="400"></canvas>
+    <div class="row justify-content-around my-5 " style="margin: 0px">
+      <div class="col-lg-6 shadow p-3 mb-5 bg-body rounded">
+        <canvas id="myChart" width="480" height="430"></canvas>
+      </div>
+      <div class="col-lg-4 shadow p-3 mb-5 bg-body rounded">
+        <canvas id="myChartPie" width="1000" height="400"></canvas>
       </div>
     </div>
 
 
-  <div class="row justify-content-center" style="margin: 0px">
+  <div class="row justify-content-center my-5 shadow p-3 mb-5 bg-body rounded" style="margin: 0px">
     <div class="col-lg-8 my-4">
       <canvas id="myChartLine" width="400" height="400"></canvas>
     </div>
   </div>
 
 
-
-  <div class="row" style="margin: 0px; margin-top: 20px;">
-    <div class="col-lg-12">
-      <div id="wrapper"></div>
-    </div>
-  </div>
-  <div class="row justify-content-center" style="margin: 0px; margin-top: 20px;">
-    <div class="col-lg-6">
-      <canvas id="myChartPie" width="400" height="400"></canvas>
-    </div>
-  </div>
-
-
-
-  <div class="row" style="margin: 0px; margin-top: 20px;">
+  <div class="row my-5 shadow p-3 mb-5 bg-body rounded" style="margin: 0px; margin-top: 20px;">
     <div class="col-lg-11">
       <canvas id="myAnnualRainLineChart" width="1000" height="600"></canvas>
     </div>
   </div>
+
+  <h5 class="mt-4 text-center pt-5">Annual Rainfall Table Data For {{data.state.name}}</h5>
+
+  <div class="row mb-5 shadow p-3 mb-5 bg-body rounded" style="margin: 0px; margin-top: 20px;">
+    <div class="col-lg-12">
+      <div id="wrapper"></div>
+    </div>
+  </div>
+ 
 </div>
 <script>
   let annual_bar_data = {{data.json_annual_bar_data}};
