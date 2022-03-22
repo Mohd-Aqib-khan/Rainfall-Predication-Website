@@ -110,7 +110,7 @@ def stateComparsion(request):
         "stateList": list_state
     }
     # return HttpResponse("Hello, world. You're at the polls index.")
-    return render(request, 'machineLearning/statecomparsion.html', {"data": data})
+    return render(request, 'machineLearning/statecomparsion.html', {"data": data,"welcome":"State Comparison"})
 
 
 def index(request):
@@ -150,4 +150,4 @@ def state_view(request, sid):
     json_annual_bar_data = simplejson.dumps(annual_bar_data)
     data = {"state": s, "year": year_d[s.name], "datasets": annual_data, "stateList": list_state, "state_data": json_x,
             "columns": json_columns, "json_bar_data": json_bar_dataset, "json_annual_bar_data": json_annual_bar_data}
-    return render(request, 'machineLearning/state_view.html', {"data": data})
+    return render(request, 'machineLearning/state_view.html', {"data": data,"welcome":"State View"})

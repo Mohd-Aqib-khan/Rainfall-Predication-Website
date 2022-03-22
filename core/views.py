@@ -71,15 +71,16 @@ def index(request):
         'dests': dests,
         'states': st,
         'slider': sl,
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "welcome":"Rainfall Home Page"
     }
     return render(request, "index.html", context)
 
 
 def contact(request):
 
-    return render(request, 'contact.html', {'contact': "active"})
+    return render(request, 'contact.html', {'contact': "active",'welcome':"Contact Page"})
 
 
 def about(request):
-    return render(request, 'about.html', {'about': "active"})
+    return render(request, 'about.html', {'about': "active",'welcome':"About Us Page"})
