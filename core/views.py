@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from matplotlib.style import context
 from core.models import Contact, Destination, Slider, State,News
 from django.core.paginator import Paginator
-from core.form import ContactForm
+# from core.form import ContactForm
 # Create your views here.
 
 
@@ -89,16 +89,12 @@ def contact(request):
         namec=request.POST.get("names")
         emailc=request.POST.get("email")
         subjectc=request.POST.get("subject")
-        messagec=request.POST.get("message")
-        
+        messagec=request.POST.get("message")        
         data=Contact(name=namec,email=emailc,subject=subjectc,message=messagec)
         data.save()
         return redirect('/')
-    else:
-        redirect('/')
     
     c=Contact.objects.all()
-        
     context={
         'contact': "active",
         'welcome':"Contact Page"

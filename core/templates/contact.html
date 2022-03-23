@@ -55,7 +55,8 @@
             <!-- Contact Form -->
             <div class="col-lg-6">
                 <div class="contact_form_container">
-                    <form action="#" id="contact_form" class="contact_form">
+                    <form action="#" id="contact_form" class="contact_form" method="POST">
+                        {% csrf_token %}
                         <div style="margin-bottom: 18px">
                             <input type="text" class="contact_input contact_input_name inpt" placeholder="Your Name"
                                 required="required" name="names">
@@ -79,7 +80,7 @@
                                 required="required" name="message"></textarea>
                             <div class="input_border" style="bottom:3px"></div>
                         </div>
-                        <button class="contact_button">send</button>
+                        <button type="submit" class="contact_button">send</button>
                     </form>
                 </div>
             </div>

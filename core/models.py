@@ -44,3 +44,7 @@ class Contact(models.Model):
     subject = models.CharField(max_length=200)
     message = models.TextField()
     date=models.DateField(auto_now_add=True)
+    
+c=Contact.objects.all()
+for message in c:
+    print(message.name)
