@@ -1,6 +1,10 @@
-from django.shortcuts import render
-from core.models import Destination, Slider, State
+import email
+from email import message
+from django.shortcuts import redirect, render
+from matplotlib.style import context
+from core.models import Contact, Destination, Slider, State,News
 from django.core.paginator import Paginator
+from core.form import ContactForm
 # Create your views here.
 
 
@@ -65,12 +69,15 @@ def index(request):
     print(len(l))
 
     sl = Slider.objects.all()
+    
+    nw=News.objects.all()
 
     context = {
         'home': "active",
         'dests': dests,
         'states': st,
         'slider': sl,
+        "news":nw,
         "page_obj": page_obj,
         "welcome":"Rainfall Home Page"
     }
@@ -78,8 +85,26 @@ def index(request):
 
 
 def contact(request):
-
-    return render(request, 'contact.html', {'contact': "active",'welcome':"Contact Page"})
+    if request.method=="POST":
+        namec=request.POST.get("names")
+        emailc=request.POST.get("email")
+        subjectc=request.POST.get("subject")
+        messagec=request.POST.get("message")
+        
+        data=Contact(name=namec,email=emailc,subject=subjectc,message=messagec)
+        data.save()
+        return redirect('/')
+    else:
+        redirect('/')
+    
+    c=Contact.objects.all()
+        
+    context={
+        'contact': "active",
+        'welcome':"Contact Page"
+    }
+    
+    return render(request, 'contact.html', context)
 
 
 def about(request):

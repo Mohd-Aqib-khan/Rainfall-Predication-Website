@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Destination, State, Slider
+from core.models import Contact, Destination, State, Slider,News
 # Register your models here.
 
 
@@ -11,3 +11,11 @@ class StateAdmin(admin.ModelAdmin):
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
     list_display = ('id', 'img')
+    
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ('id','day', 'month','title','news_pic','news_desc')
+    
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('id','name', 'email','subject','message','date')
