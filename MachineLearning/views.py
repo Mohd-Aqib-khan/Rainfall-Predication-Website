@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from core.models import State
+from core.models import State,Dataset
 import json as simplejson
 import os
 import numpy as np
@@ -53,6 +53,7 @@ def removingNull(df, annual_rain_d, year_d):
         dec_mean = (dedata.mean())
         if nan_arr != 0:
             df["ANNUAL"].fillna(int(annual_mean), limit=nan_arr, inplace=True)
+            print("a:++++++++++++++++",a)
         if nan_jan != 0:
             df["JAN"].fillna(int(jan_mean), limit=nan_jan, inplace=True)
         if nan_feb != 0:
@@ -77,6 +78,9 @@ def removingNull(df, annual_rain_d, year_d):
             df["NOV"].fillna(int(nov_mean), limit=nan_nov, inplace=True)
         if nan_dec != 0:
             df["DEC"].fillna(int(dec_mean), limit=nan_dec, inplace=True)
+    return df
+        
+        
 
 
 def seperatingData(df):
@@ -159,3 +163,15 @@ def state_view(request, sid):
     data = {"state": s, "year": year_d[s.name], "datasets": annual_data, "stateList": list_state, "state_data": json_x,
             "columns": json_columns, "json_bar_data": json_bar_dataset, "json_annual_bar_data": json_annual_bar_data}
     return render(request, 'machineLearning/state_view.html', {"data": data,"welcome":"State View"})
+
+
+os.chdir("D:\\DataSet")
+df = pd.read_csv("rainfall_in_india.csv")
+annual_rain_d, year_d = seperatingData(df)
+df = removingNull(df, annual_rain_d, year_d)
+annual_rain_d, year_d = seperatingData(df)
+
+for i in annual_rain_d.keys():
+    for a in range(len(annual_rain_d[i][0])):
+        c=Dataset(SUBDIVISION=i,YEAR=year_d[i][a],JAN=annual_rain_d[i][1][a],FEB=annual_rain_d[i][2][a],MAR=annual_rain_d[i][3][a],APR=annual_rain_d[i][4][a],MAY=annual_rain_d[i][5][a],JUN=annual_rain_d[i][6][a],JUL=annual_rain_d[i][7][a],AUG=annual_rain_d[i][8][a],SEP=annual_rain_d[i][9][a],OCT=annual_rain_d[i][10][a],NOV=annual_rain_d[i][11][a],DEC=annual_rain_d[i][12][a],ANNUAL=annual_rain_d[i][0][a],Jan_Feb=0,Mar_May=0,Jun_Sep=0,Oct_Dec =0 )
+        c.save()
