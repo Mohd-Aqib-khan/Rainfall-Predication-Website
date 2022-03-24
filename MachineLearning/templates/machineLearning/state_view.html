@@ -214,8 +214,9 @@
   }).render(document.getElementById("wrapper"));
 </script>
 <script>
+  const name = "{{data.state.name | safe}}";
   const datase = {{data.datasets | safe}};
-  const da1 = datase["ANDAMAN & NICOBAR ISLANDS"][0];
+  const da1 = datase[name][0];
   const year = {{data.year}};
   let data = [];
   for (let i = 0; i < da1.length; i++) {
@@ -233,7 +234,7 @@
     type: 'line',
     data: {
       datasets: [{
-          label: "ANDAMAN & NICOBAR ISLANDS",
+          label: name,
           borderColor: '#2266a8',
           borderWidth: 1,
           radius: 2,

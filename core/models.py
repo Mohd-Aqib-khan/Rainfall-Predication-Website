@@ -5,7 +5,7 @@ from email import message
 from email.policy import default
 from pyexpat import model
 from django.db import models
-from matplotlib.pyplot import cla
+# from matplotlib.pyplot import cla
 
 # Create your models here.
 
