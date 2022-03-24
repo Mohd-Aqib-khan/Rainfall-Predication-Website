@@ -104,10 +104,12 @@ def stateComparsion(request):
     annual_rain_d, year_d = seperatingData(df)
     annual_data = simplejson.dumps(annual_rain_d)
     list_state = list(annual_rain_d.keys())
+    parameter = ["Annual","January","February","March","April","May","June","July","August","September","October","November","December"]
     data = {
         "year": year_d["ANDAMAN & NICOBAR ISLANDS"],
         "datasets": annual_data,
-        "stateList": list_state
+        "stateList": list_state,
+        "parameter": parameter
     }
     # return HttpResponse("Hello, world. You're at the polls index.")
     return render(request, 'machineLearning/statecomparsion.html', {"data": data,"welcome":"State Comparison"})

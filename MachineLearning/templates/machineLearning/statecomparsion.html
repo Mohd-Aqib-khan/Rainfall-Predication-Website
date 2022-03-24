@@ -4,6 +4,7 @@
 
 <div class="container-fluid py-5">
     <div class="home_search_container"
+        id="background_container"
         style="top: 0px; background: rgba(0,0,0,0.26); position: relative; min-height:850px;">
         <div class="home_search_title px-3">RainFall Comparsion of Two States</div>
         <div class="home_search_content">
@@ -12,13 +13,16 @@
                     required="required" onclick="showList(0)">
                 <input type="text" id="secondState" class="search_input search_input_1" placeholder="Select the State"
                     required="required" onclick="showList(1)">
+                <input type="text" id="parameterListItem" class="search_input search_input_1" placeholder="Select the State"
+                    required="required" onclick="showList(2)">
                 <button class="home_search_button" onclick="fetchData()">search</button>
             </div>
         </div>
         <div class="row">
-            <ul id="stateFirst1" class="col-md-5" style="position: relative; display: none;max-height: 377px;
+            <ul id="stateFirst1" class="col-md-5" style="position: relative; max-height: 377px;
         max-width: 325px;
         left: 39px;
+        visibility: hidden;
         overflow-y: scroll;
         background-color: white;
         margin-top: -10px;">
@@ -51,15 +55,52 @@
                 </li>
                 {% endfor %}
             </ul>
-            <ul id="stateSecond2" class="col-md-5" style="position: relative; display: none;max-height: 377px;
-        max-width: 325px;
-        left: 129px;
-        overflow-y: scroll;
-        background-color: white;
-        margin-top: -10px;">
+            <ul id="stateSecond2" class="col-md-5" style="position: relative; max-height: 377px;
+                max-width: 325px;
+                left: 76px;
+                visibility: hidden;
+                overflow-y: scroll;
+                background-color: white;
+                margin-top: -10px;">
                 {% for item in data.stateList %}
                 <li style="margin-bottom: 5px;">
                     <button class="" type="button" onclick="check(2,{{forloop.counter0}})" style="
+                    width: -webkit-fill-available;
+                    border-radius: 14px;
+                    height: 50px;
+                    background: #f2f5f6;
+                    border: none;
+                    outline: none;
+                    margin-right: 13px;
+                    padding-left: 17px;
+                    font-family: 'Oswald', sans-serif;
+                    font-size: 14px !important;
+                    font-weight: 500 !important;
+                    color: #72728c !important;
+                    text-align: center;
+                    margin-left: 8px;
+                    padding-right: 15px;
+                    padding-top: 14px;
+                ">
+                        <pre style="font-family: 'Oswald', sans-serif;
+                        font-size: 14px !important;
+                        margin-left: 0px;
+                        text-align: center;
+                        font-weight: 500 !important;">{{item | safe}}</pre>
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+            <ul id="paraMeter" class="col-md-5" style="position: relative; max-height: 377px;
+                max-width: 325px;
+                left: 111px;
+                visibility: hidden;
+                overflow-y: scroll;
+                background-color: white;
+                margin-top: -10px;">
+                {% for item in data.parameter %}
+                <li style="margin-bottom: 5px;">
+                    <button class="" type="button" onclick="check(3,{{forloop.counter0}})" style="
                     width: -webkit-fill-available;
                     border-radius: 14px;
                     height: 50px;
@@ -103,30 +144,39 @@
     let myChart = "";
     let stateFirst = "";
     let stateSecond = "";
+    let para = "";
     let count = 0;
-
+    let arr = {{data.stateList | safe}};
+    let arrparameter = {{data.parameter | safe}};
     function showList(index) {
         console.log("show working ");
         if (index == 0) {
-            document.getElementById("stateFirst1").style.display = "block";
-            document.getElementById("stateSecond2").style.left = "129px";
+            document.getElementById("stateFirst1").style.visibility = "visible";
         }
         if (index == 1) {
-            document.getElementById("stateSecond2").style.display = "block";
+            document.getElementById("stateSecond2").style.visibility = "visible";
+        }
+        if(index == 2){
+            document.getElementById("paraMeter").style.visibility = "visible";
         }
     }
 
     function check(num, stateIndex) {
-        let arr = {{data.stateList | safe}};
+        
         if (num == 1) {
             document.getElementById("firstState").value = arr[stateIndex];
-            document.getElementById("stateFirst1").style.display = "none"
+            document.getElementById("stateFirst1").style.visibility = "hidden"
             stateFirst = arr[stateIndex];
-            document.getElementById("stateSecond2").style.left = "455px";
+            //document.getElementById("stateSecond2").style.left = "455px";
         } else if (num == 2) {
             document.getElementById("secondState").value = arr[stateIndex];
             stateSecond = arr[stateIndex];
-            document.getElementById("stateSecond2").style.display = "none";
+            document.getElementById("stateSecond2").style.visibility = "hidden";
+        }
+        else if(num == 3){
+            document.getElementById("parameterListItem").value = arrparameter[stateIndex];
+            para = arrparameter[stateIndex];
+            document.getElementById("paraMeter").style.visibility = "hidden";
         }
         console.log("state Name is :-", arr[stateIndex]);
     }
@@ -137,8 +187,8 @@
             count += 1;
             // auto formatted data 1
             dataset = {{data.datasets | safe}};
-            const da1 = dataset[stateFirst][0];
-            const da2 = dataset[stateSecond][0];
+            const da1 = dataset[stateFirst][arrparameter.indexOf(para)];
+            const da2 = dataset[stateSecond][arrparameter.indexOf(para)];
 
              // auto formatted data 2
             const year = {{data.year}};
@@ -238,7 +288,7 @@
                         y: {
                             title: {
                                 display: true,
-                                text: 'Amount of Rainfall'
+                                text: `${para} amount of Rainfall`
                             }
                         }
 
@@ -249,8 +299,8 @@
             myChart.destroy();
             // auto formatted data 3
             dataset = {{data.datasets | safe}};
-            const da1 = dataset[stateFirst][0];
-            const da2 = dataset[stateSecond][0];
+            const da1 = dataset[stateFirst][arrparameter.indexOf(para)];
+            const da2 = dataset[stateSecond][arrparameter.indexOf(para)];
              // auto formatted data 4
             const year = {{data.year}};
             let data = [];
@@ -348,7 +398,7 @@
                         y: {
                             title: {
                                 display: true,
-                                text: 'Amount of Rainfall'
+                                text: `${para} amount of Rainfall`
                             }
                         }
 
