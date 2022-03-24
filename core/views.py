@@ -1,7 +1,7 @@
 import email
 from email import message
 from django.shortcuts import redirect, render
-from matplotlib.style import context
+# from matplotlib.style import context
 from core.models import Contact, Destination, Slider, State,News
 from django.core.paginator import Paginator
 # from core.form import ContactForm

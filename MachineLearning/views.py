@@ -119,33 +119,41 @@ def index(request):
 
 def state_view(request, sid):
     #global annual_rain_d,annual_data, year_d, annual_bar_data
+    # Loading Data from local disk 
+    
     s = State.objects.get(pk=sid)
     os.chdir("E:\P\Rain\media\CSV")
     df = pd.read_csv("rainfall_in_india.csv")
+    # setting data into state-wise
     annual_rain_d, year_d = seperatingData(df)
+    # Removing null value from dataset
     removingNull(df, annual_rain_d, year_d)
+    # setting data into state-wise
     annual_rain_d, year_d = seperatingData(df)
+
     annual_data = simplejson.dumps(annual_rain_d)
     annual_bar_data = []
     list_state = list(annual_rain_d.keys())
     print("stateName:-", s.name)
-    annual_rain_d[s.name].append(year_d[s.name])
+    annual_rain_d[s.name].insert(0,year_d[s.name])
     A_N_test = np.transpose(annual_rain_d[s.name])
     print(len(A_N_test))
     print(len(A_N_test[0]))
     new_dataset = pd.DataFrame(A_N_test, columns=[
-                               'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'YEAR'])
-    x = new_dataset[['Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY',
-                     'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'YEAR']].values
+                               'YEAR', 'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'])
+    x = new_dataset[['YEAR', 'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY',
+                     'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']].values
     x_d = x.tolist()
     json_x = simplejson.dumps(x_d)
     json_columns = simplejson.dumps(
-        ['Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'YEAR'])
+        ['YEAR', 'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'])
     bar_dataset = []
-    for index in range(len(annual_rain_d[s.name])-1):
+    for index in range(2,len(annual_rain_d[s.name])):
         bar_dataset.append(np.mean(annual_rain_d[s.name][index]))
-    for state in annual_rain_d.values():
-        annual_bar_data.append(np.mean(state[0]))
+    for stateName, stateValue in annual_rain_d.items():
+        if(stateName==s.name):
+            annual_bar_data.append(np.mean(stateValue[1]))
+        annual_bar_data.append(np.mean(stateValue[0]))
     json_bar_dataset = simplejson.dumps(bar_dataset)
     json_annual_bar_data = simplejson.dumps(annual_bar_data)
     data = {"state": s, "year": year_d[s.name], "datasets": annual_data, "stateList": list_state, "state_data": json_x,
