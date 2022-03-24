@@ -120,7 +120,7 @@ def index(request):
 def state_view(request, sid):
     #global annual_rain_d,annual_data, year_d, annual_bar_data
     s = State.objects.get(pk=sid)
-    os.chdir("D:\\DataSet")
+    os.chdir("E:\P\Rain\media\CSV")
     df = pd.read_csv("rainfall_in_india.csv")
     annual_rain_d, year_d = seperatingData(df)
     removingNull(df, annual_rain_d, year_d)
