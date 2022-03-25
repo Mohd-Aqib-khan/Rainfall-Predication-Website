@@ -53,7 +53,6 @@ def removingNull(df, annual_rain_d, year_d):
         dec_mean = (dedata.mean())
         if nan_arr != 0:
             df["ANNUAL"].fillna(int(annual_mean), limit=nan_arr, inplace=True)
-            print("a:++++++++++++++++",a)
         if nan_jan != 0:
             df["JAN"].fillna(int(jan_mean), limit=nan_jan, inplace=True)
         if nan_feb != 0:

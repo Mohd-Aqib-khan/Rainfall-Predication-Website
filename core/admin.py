@@ -22,4 +22,4 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Dataset)
 class DatasetAdmin(admin.ModelAdmin):
-    list_display = ('SUBDIVISION','YEAR','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','ANNUAL','Jan_Feb','Mar_May','Jun_Sep','Oct_Dec')
+    list_display = ('id','SUBDIVISION','YEAR','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','ANNUAL','Jan_Feb','Mar_May','Jun_Sep','Oct_Dec')
