@@ -1,5 +1,6 @@
 import email
 from email import message
+from urllib import response
 from django.shortcuts import redirect, render
 # from matplotlib.style import context
 from django.core import serializers
@@ -9,9 +10,17 @@ from django.core.paginator import Paginator
 # drf start
 from rest_framework import generics
 # from core.models import Dr
-from core.serializers import DatasetSerializer
+from core.serializers import DatasetSerializer,ContactSerializer
 
 # drf end
+
+# function based view drf start
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+
+# function based view drf end
 
 
 # Create your views here.
@@ -140,3 +149,26 @@ class API_objects(generics.ListCreateAPIView):
 class API_objects_details(generics.RetrieveUpdateDestroyAPIView):
     queryset=Dataset.objects.all()
     serializer_class=DatasetSerializer
+    
+    
+# FBV
+# @api_view(["GET"])
+# def getData(request):
+#     contacts=Contact.objects.all()
+#     serializer=ContactSerializer(contacts,many=True)
+#     return Response(serializer.data)
+
+
+@api_view(["GET"])
+def getdata(request):
+    contacts=Dataset.objects.filter(SUBDIVISION="ANDAMAN & NICOBAR ISLANDS")
+    serializer=DatasetSerializer(contacts,many=True)
+    return Response(serializer.data)
+
+@api_view(["POST"])
+def adddata(request):
+    serializer=DatasetSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return response(serializer.data)
+    

@@ -125,6 +125,9 @@ def state_view(request, sid):
     # Loading Data from local disk
 
     s = State.objects.get(pk=sid)
+    
+    
+    
     os.chdir("E:\P\Rain\media\CSV")
     df = pd.read_csv("rainfall_in_india.csv")
     # setting data into state-wise
