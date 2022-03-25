@@ -1,5 +1,7 @@
+from re import I
 from django.shortcuts import render
 from core.models import State, Dataset
+from django.core import serializers
 import json as simplejson
 import os
 import numpy as np
@@ -173,3 +175,7 @@ annual_rain_d, year_d = seperatingData(df)
 #         c = Dataset(SUBDIVISION=i, YEAR=year_d[i][a], JAN=annual_rain_d[i][1][a], FEB=annual_rain_d[i][2][a], MAR=annual_rain_d[i][3][a], APR=annual_rain_d[i][4][a], MAY=annual_rain_d[i][5][a], JUN=annual_rain_d[i][6][a], JUL=annual_rain_d[i]
 #                     [7][a], AUG=annual_rain_d[i][8][a], SEP=annual_rain_d[i][9][a], OCT=annual_rain_d[i][10][a], NOV=annual_rain_d[i][11][a], DEC=annual_rain_d[i][12][a], ANNUAL=annual_rain_d[i][0][a], Jan_Feb=0, Mar_May=0, Jun_Sep=0, Oct_Dec=0)
 #         c.save()
+
+
+# A_N=Dataset.objects.filter(SUBDIVISION="ANDAMAN & NICOBAR ISLANDS")
+# post_list=serializers.serialize("json",A_N)

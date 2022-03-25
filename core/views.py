@@ -2,7 +2,8 @@ import email
 from email import message
 from django.shortcuts import redirect, render
 # from matplotlib.style import context
-from core.models import Contact, Destination, Slider, State,News
+from django.core import serializers
+from core.models import Contact, Destination, Slider, State,News,Dataset
 from django.core.paginator import Paginator
 # from core.form import ContactForm
 # Create your views here.
@@ -61,12 +62,10 @@ def index(request):
 
     paginator = Paginator(st, 6)
     page_number = request.GET.get('page')
-    print(page_number)
     page_obj = paginator.get_page(page_number)
     l = []
     for state in st:
         l.append(state.name)
-    print(len(l))
 
     sl = Slider.objects.all()
     
@@ -105,3 +104,10 @@ def contact(request):
 
 def about(request):
     return render(request, 'about.html', {'about': "active",'welcome':"About Us Page"})
+
+
+def show_dataset(request):
+    data=Dataset.objects.all()
+    A_N=Dataset.objects.filter(SUBDIVISION="ANDAMAN & NICOBAR ISLANDS")
+    post_list=serializers.serialize("json",A_N)
+    return render(request,'dataset.html',{'dataset':data,"post_list":post_list})
