@@ -23,3 +23,8 @@ class ContactAdmin(admin.ModelAdmin):
 @admin.register(Dataset)
 class DatasetAdmin(admin.ModelAdmin):
     list_display = ('id','SUBDIVISION','YEAR','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','ANNUAL',)
+    
+# Drf
+# @admin.register(DrfPost)
+# class DrfPostAdmin(admin.ModelAdmin):
+#     list_display = ('id','name','auther','uploaded','rating')

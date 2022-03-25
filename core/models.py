@@ -67,5 +67,19 @@ class Dataset(models.Model):
     Oct_Dec = models.FloatField(db_column='Oct-Dec',default=0)
     
     
+
+# Django Restframework
+
+# Grade=[
+#     ('excellent',1),
+#     ('average',0),
+#     ('bad',-1),
+# ]
+# class DrfPost(models.Model):
+#     name=models.CharField(max_length=100)
+#     auther=models.CharField(max_length=100)
+#     uploaded=models.DateTimeField(auto_now_add=True)
+#     rating=models.CharField(choices=Grade,default="average",max_length=50)
     
-    
+#     class Meta:
+#         ordering=['uploaded']

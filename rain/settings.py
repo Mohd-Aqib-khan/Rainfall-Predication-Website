@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'MachineLearning'
+    'MachineLearning',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

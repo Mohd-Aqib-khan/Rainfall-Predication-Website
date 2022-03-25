@@ -6,6 +6,14 @@ from django.core import serializers
 from core.models import Contact, Destination, Slider, State,News,Dataset
 from django.core.paginator import Paginator
 # from core.form import ContactForm
+# drf start
+from rest_framework import generics
+# from core.models import Dr
+from core.serializers import DatasetSerializer
+
+# drf end
+
+
 # Create your views here.
 
 
@@ -111,3 +119,24 @@ def show_dataset(request):
     A_N=Dataset.objects.filter(SUBDIVISION="ANDAMAN & NICOBAR ISLANDS")
     post_list=serializers.serialize("json",A_N)
     return render(request,'dataset.html',{'dataset':data,"post_list":post_list})
+
+
+
+# DRF
+
+# class API_objects(generics.ListCreateAPIView):
+#     queryset=Dataset.objects.all()
+#     serializer_class=DrfPostSerializer
+    
+# class API_objects_details(generics.RetrieveUpdateDestroyAPIView):
+#     queryset=Dataset.objects.all()
+#     serializer_class=DrfPostSerializer
+
+
+class API_objects(generics.ListCreateAPIView):
+    queryset=Dataset.objects.all()
+    serializer_class=DatasetSerializer
+    
+class API_objects_details(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Dataset.objects.all()
+    serializer_class=DatasetSerializer
