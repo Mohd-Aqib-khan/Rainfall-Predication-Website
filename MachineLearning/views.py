@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from core.models import State
+from core.models import State, Dataset
 import json as simplejson
 import os
 import numpy as np
@@ -77,6 +77,7 @@ def removingNull(df, annual_rain_d, year_d):
             df["NOV"].fillna(int(nov_mean), limit=nan_nov, inplace=True)
         if nan_dec != 0:
             df["DEC"].fillna(int(dec_mean), limit=nan_dec, inplace=True)
+    return df
 
 
 def seperatingData(df):
@@ -110,7 +111,7 @@ def stateComparsion(request):
         "stateList": list_state
     }
     # return HttpResponse("Hello, world. You're at the polls index.")
-    return render(request, 'machineLearning/statecomparsion.html', {"data": data,"welcome":"State Comparison"})
+    return render(request, 'machineLearning/statecomparsion.html', {"data": data, "welcome": "State Comparison"})
 
 
 def index(request):
@@ -119,8 +120,8 @@ def index(request):
 
 def state_view(request, sid):
     #global annual_rain_d,annual_data, year_d, annual_bar_data
-    # Loading Data from local disk 
-    
+    # Loading Data from local disk
+
     s = State.objects.get(pk=sid)
     os.chdir("E:\P\Rain\media\CSV")
     df = pd.read_csv("rainfall_in_india.csv")
@@ -135,7 +136,7 @@ def state_view(request, sid):
     annual_bar_data = []
     list_state = list(annual_rain_d.keys())
     print("stateName:-", s.name)
-    annual_rain_d[s.name].insert(0,year_d[s.name])
+    annual_rain_d[s.name].insert(0, year_d[s.name])
     A_N_test = np.transpose(annual_rain_d[s.name])
     print(len(A_N_test))
     print(len(A_N_test[0]))
@@ -148,14 +149,27 @@ def state_view(request, sid):
     json_columns = simplejson.dumps(
         ['YEAR', 'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'])
     bar_dataset = []
-    for index in range(2,len(annual_rain_d[s.name])):
+    for index in range(2, len(annual_rain_d[s.name])):
         bar_dataset.append(np.mean(annual_rain_d[s.name][index]))
     for stateName, stateValue in annual_rain_d.items():
-        if(stateName==s.name):
+        if(stateName == s.name):
             annual_bar_data.append(np.mean(stateValue[1]))
         annual_bar_data.append(np.mean(stateValue[0]))
     json_bar_dataset = simplejson.dumps(bar_dataset)
     json_annual_bar_data = simplejson.dumps(annual_bar_data)
     data = {"state": s, "year": year_d[s.name], "datasets": annual_data, "stateList": list_state, "state_data": json_x,
             "columns": json_columns, "json_bar_data": json_bar_dataset, "json_annual_bar_data": json_annual_bar_data}
-    return render(request, 'machineLearning/state_view.html', {"data": data,"welcome":"State View"})
+    return render(request, 'machineLearning/state_view.html', {"data": data, "welcome": "State View"})
+
+
+os.chdir("D:\\DataSet")
+df = pd.read_csv("rainfall_in_india.csv")
+annual_rain_d, year_d = seperatingData(df)
+df = removingNull(df, annual_rain_d, year_d)
+annual_rain_d, year_d = seperatingData(df)
+
+# for i in annual_rain_d.keys():
+#     for a in range(len(annual_rain_d[i][0])):
+#         c = Dataset(SUBDIVISION=i, YEAR=year_d[i][a], JAN=annual_rain_d[i][1][a], FEB=annual_rain_d[i][2][a], MAR=annual_rain_d[i][3][a], APR=annual_rain_d[i][4][a], MAY=annual_rain_d[i][5][a], JUN=annual_rain_d[i][6][a], JUL=annual_rain_d[i]
+#                     [7][a], AUG=annual_rain_d[i][8][a], SEP=annual_rain_d[i][9][a], OCT=annual_rain_d[i][10][a], NOV=annual_rain_d[i][11][a], DEC=annual_rain_d[i][12][a], ANNUAL=annual_rain_d[i][0][a], Jan_Feb=0, Mar_May=0, Jun_Sep=0, Oct_Dec=0)
+#         c.save()
