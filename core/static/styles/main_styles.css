@@ -720,7 +720,7 @@ section {
 }
 
 .search_input_1 {
-   width: 100%;
+   width: 25%;
 }
 
 .search_input_2 {
@@ -767,7 +767,7 @@ section {
    font-family: "Oswald", sans-serif;
    font-size: 14px !important;
    font-weight: 400 !important;
-   color: #1a1a62 !important;
+   color: #72728c !important;
 }
 
 .home_search_button {
@@ -783,7 +783,7 @@ section {
    border: none;
    outline: none;
    cursor: pointer;
-} 
+}
 
 /*********************************
 7. Intro

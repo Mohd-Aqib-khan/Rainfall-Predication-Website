@@ -11,11 +11,8 @@
 4. Menu
 5. Home
 6. Home Search
-7. About
-8. Milestones
-9. Why choose us
-10. Team
-11. Footer
+7. Contact
+8. Footer
 
 
 ******************************/
@@ -634,7 +631,7 @@ section {
 /*********************************
 6. Home Search
 *********************************/
-/* 
+
 .home_search {
    width: 100%;
    height: 0;
@@ -756,216 +753,120 @@ section {
    border: none;
    outline: none;
    cursor: pointer;
-} */
+}
 
 /*********************************
-7. About
+7. Contact
 *********************************/
 
-.about {
+.contact {
    width: 100%;
+   padding-top: 15rem;
+   padding-bottom: 15rem;
    background: #ffffff;
-   padding-top: 115px;
 }
 
-.about_row {
-   margin-top: 95px;
-}
-
-.about_content {
-   width: 100%;
-   margin-top: -7px;
-}
-
-.text_highlight {
-   font-size: 18px;
-   font-weight: 700;
-   color: #181818;
-   line-height: 1.66;
-}
-
-.about_text {
-   max-height: 480px;
-   margin-top: 35px;
-   text-overflow: ellipsis;
-   overflow: hidden;
-}
-
-.about_button {
-   margin-top: 67px;
-}
-
-.about_image {
-   width: 100%;
-   border-radius: 2rem !important;
-}
-
-.about_img_radius {
-   border-radius: 0.2rem;
-}
-
-.about_image img {
-   max-width: 100%;
-}
-
-/*********************************
-8. Milestones
-*********************************/
-
-.milestones {
-   width: 100%;
-   background: #ffffff;
-   padding-top: 115px;
-   padding-bottom: 115px;
-}
-
-.milestone {
-   width: 100%;
-}
-
-.milestone_icon {
-   display: inline-block;
-   height: 82px;
-   width: 82px;
-}
-
-.milestone_icon img {
-   max-width: 100%;
-}
-
-.milestone_counter {
+.contact_title {
    font-family: "Oswald", sans-serif;
-   font-size: 60px;
-   font-weight: 500;
+   font-size: 28px;
    color: #181818;
-   line-height: 0.75;
-   margin-top: 35px;
 }
 
-.milestone_text {
+.contact_text {
+   margin-top: 30px;
+}
+
+.contact_list {
+   margin-top: 52px;
+}
+
+.contact_list ul li:not(:last-child) {
+   margin-bottom: 36px;
+}
+
+.contact_list ul li>div:first-child {
+   width: 104px;
+   height: 34px;
+   background: #282c51;
    font-family: "Oswald", sans-serif;
-   font-size: 18px;
-   font-weight: 500;
-   color: #838383;
-   margin-top: 31px;
-   line-height: 0.75;
-}
-
-/*********************************
-9. Why choose us
-*********************************/
-
-.why {
-   width: 100%;
-   padding-top: 115px;
-   padding-bottom: 113px;
-}
-
-.why .section_subtitle,
-.why .section_title {
    color: #ffffff;
+   font-size: 16px;
+   text-transform: uppercase;
+   text-align: center;
+   line-height: 34px;
+   border-radius: 10px;
 }
 
-.why_row {
-   margin-top: 100px;
+.contact_list ul li>div:last-child {
+   font-size: 14px;
+   color: #88889d;
+   margin-top: 10px;
+   padding-left: 2px;
 }
 
-.why_item {
+.contact_form_container {
    width: 100%;
-   background: #ffffff;
+   margin-top: 55px;
 }
 
-.why_image {
+.contact_input {
    width: 100%;
-}
-
-.why_image img {
-   max-width: 100%;
-}
-
-.why_content {
-   padding-top: 48px;
-   padding-bottom: 55px;
-   padding-left: 35px;
-   padding-right: 35px;
-}
-
-.why_title {
-   font-family: "Oswald", sans-serif;
-   font-size: 30px;
-   font-weight: 500;
-   color: #181818;
-   line-height: 1.1;
-}
-
-.why_text {
-   margin-top: 20px;
-}
-
-.why_icon {
-   position: absolute;
-   top: -29px;
-   left: 50%;
-   -webkit-transform: translateX(-50%);
-   -moz-transform: translateX(-50%);
-   -ms-transform: translateX(-50%);
-   -o-transform: translateX(-50%);
-   transform: translateX(-50%);
-   width: 73px;
-   height: 73px;
+   height: 53px;
    background: #f2f5f6;
-   border-radius: 50%;
+   border: none;
+   outline: none;
+   padding-left: 20px;
 }
 
-.why_icon img {
-   max-width: 60%;
+.contact_textarea {
+   height: 163px;
+   padding-top: 12px;
 }
 
-/*********************************
-10. Team
-*********************************/
-
-.team {
-   width: 100%;
-   background: #ffffff;
-   padding-top: 115px;
-   padding-bottom: 67px;
-}
-
-.team_row {
-   margin-top: 100px;
-}
-
-.team_item {
-   width: 100%;
-   padding-bottom: 48px;
-}
-
-.team_image {
-   width: 195px;
-   height: 195px;
-   border-radius: 50%;
-   overflow: hidden;
-}
-
-.team_image img {
-   max-width: 100%;
-}
-
-.team_content {
-   width: 100%;
-}
-
-.team_title {
-   margin-top: 37px;
-}
-
-.team_title a {
+.contact_input::-webkit-input-placeholder {
    font-family: "Oswald", sans-serif;
-   font-size: 24px;
-   font-weight: 400;
-   color: rgba(24, 24, 24, 1);
-   line-height: 1.2;
+   font-size: 14px !important;
+   font-weight: 400 !important;
+   color: #88889d !important;
+}
+
+.contact_input:-moz-placeholder {
+   font-family: "Oswald", sans-serif;
+   font-size: 14px !important;
+   font-weight: 400 !important;
+   color: #88889d !important;
+}
+
+.contact_input::-moz-placeholder {
+   font-family: "Oswald", sans-serif;
+   font-size: 14px !important;
+   font-weight: 400 !important;
+   color: #88889d !important;
+}
+
+.contact_input:-ms-input-placeholder {
+   font-family: "Oswald", sans-serif;
+   font-size: 14px !important;
+   font-weight: 400 !important;
+   color: #88889d !important;
+}
+
+.contact_input::input-placeholder {
+   font-family: "Oswald", sans-serif;
+   font-size: 14px !important;
+   font-weight: 400 !important;
+   color: #88889d !important;
+}
+
+.contact_form .input_border {
+   position: absolute;
+   left: 0;
+   bottom: -2px;
+   width: 100%;
+   height: 2px;
+   background: #181818;
+   visibility: hidden;
+   opacity: 0;
    -webkit-transition: all 200ms ease;
    -moz-transition: all 200ms ease;
    -ms-transition: all 200ms ease;
@@ -973,16 +874,49 @@ section {
    transition: all 200ms ease;
 }
 
-.team_title a:hover {
-   color: rgba(24, 24, 24, 0.7);
+.contact_button {
+   width: 161px;
+   height: 52px;
+   background: #181818;
+   font-family: "Oswald", sans-serif;
+   color: #ffffff;
+   font-size: 16px;
+   text-transform: uppercase;
+   border-radius: 20px;
+   border: none;
+   outline: none;
+   cursor: pointer;
+   margin-top: 35px;
 }
 
-.team_text {
-   margin-top: 22px;
+.contact_map {
+   width: 100%;
+   height: 692px;
+}
+
+.map {
+   width: 100%;
+   height: 100%;
+}
+
+.google_map {
+   width: 100%;
+   height: 100%;
+}
+
+.map_container {
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+}
+
+#map {
+   width: 100%;
+   height: calc(100% + 30px);
 }
 
 /*********************************
-11. Footer
+8. Footer
 *********************************/
 
 .footer {
@@ -1072,7 +1006,7 @@ section {
    width: calc((100% - 15px) * 0.65);
 }
 
-.newsletter_form>div>div>div {
+.newsletter_form .input_border {
    position: absolute;
    left: 0;
    bottom: -2px;
