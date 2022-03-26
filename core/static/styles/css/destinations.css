@@ -477,6 +477,7 @@ section
 	font-weight: 500;
 	color: #181818;
 	line-height: 0.75;
+
 }
 .menu_close_container
 {
@@ -614,7 +615,7 @@ section
 /*********************************
 6. Home Search
 *********************************/
-
+/* 
 .home_search
 {
 	width: 100%;
@@ -737,7 +738,7 @@ section
 	border: none;
 	outline: none;
 	cursor: pointer;
-}
+} */
 
 /*********************************
 7. Destinations
