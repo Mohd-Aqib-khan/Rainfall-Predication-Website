@@ -44,6 +44,7 @@ class Contact(models.Model):
     subject = models.CharField(max_length=200)
     message = models.TextField()
     date=models.DateField(auto_now_add=True)
+<<<<<<< HEAD
 
 class Dataset(models.Model):
     SUBDIVISION = models.CharField(max_length=200)
@@ -65,3 +66,9 @@ class Dataset(models.Model):
     Mar_May = models.FloatField(db_column='Mar-May')
     Jun_Sep = models.FloatField(db_column='Jun-Sep')
     Oct_Dec = models.FloatField(db_column='Oct-Dec')
+=======
+    
+c=Contact.objects.all()
+for message in c:
+    print(message.name)
+>>>>>>> 89084d8a28081ec6f53c4b060f3ec802e02efad4

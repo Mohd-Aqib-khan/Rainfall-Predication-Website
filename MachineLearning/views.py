@@ -40,6 +40,7 @@ def state_view(request, sid):
     # Loading Data from local disk 
     
     s = State.objects.get(pk=sid)
+<<<<<<< HEAD
     A_N=Dataset.objects.filter(SUBDIVISION=s.name)
     All_State_Annual_Rainfall = Dataset.objects.values('SUBDIVISION').annotate(average_rainfall=Avg('ANNUAL'))
     All_State_Data = []
@@ -58,6 +59,31 @@ def state_view(request, sid):
     
     sessional_rainfall_data =  Dataset.objects.filter(SUBDIVISION=s.name).aggregate(Jan_Feb=Avg('Jan_Feb'),Mar_May=Avg('Mar_May'),Jun_Sep=Avg('Jun_Sep'),Oct_Dec=Avg('Oct_Dec'))
     
+=======
+    os.chdir("E:\P\Rain\media\CSV")
+    df = pd.read_csv("rainfall_in_india.csv")
+    # setting data into state-wise
+    annual_rain_d, year_d = seperatingData(df)
+    # Removing null value from dataset
+    removingNull(df, annual_rain_d, year_d)
+    # setting data into state-wise
+    annual_rain_d, year_d = seperatingData(df)
+
+    annual_data = simplejson.dumps(annual_rain_d)
+    annual_bar_data = []
+    list_state = list(annual_rain_d.keys())
+    print("stateName:-", s.name)
+    annual_rain_d[s.name].insert(0,year_d[s.name])
+    A_N_test = np.transpose(annual_rain_d[s.name])
+    print(len(A_N_test))
+    print(len(A_N_test[0]))
+    new_dataset = pd.DataFrame(A_N_test, columns=[
+                               'YEAR', 'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'])
+    x = new_dataset[['YEAR', 'Annual', 'Jan', 'FEB', 'MAR', 'APR', 'MAY',
+                     'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']].values
+    x_d = x.tolist()
+    json_x = simplejson.dumps(x_d)
+>>>>>>> 89084d8a28081ec6f53c4b060f3ec802e02efad4
     json_columns = simplejson.dumps(
         ['YEAR', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',"ANNUAL","Jan_Feb","Mar_May","Jun_Sep","Oct_Dec"])
     
