@@ -54,8 +54,8 @@ def index(request):
         dests[i].img = "destination_9.jpg"
         dests[i].price = 700
 
-    st = State.objects.all()
-    print(len(st))
+    st = State.objects.all().order_by('id')
+    
 
     # paginations
 
@@ -66,7 +66,7 @@ def index(request):
     l = []
     for state in st:
         l.append(state.name)
-    print(len(l))
+    
 
     sl = Slider.objects.all()
     
