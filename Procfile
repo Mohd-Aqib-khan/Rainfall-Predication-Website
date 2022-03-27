@@ -1,1 +1,1 @@
-web: gunicorn rain.wsgi --log-file
+web: gunicorn rain.wsgi --log-file -
