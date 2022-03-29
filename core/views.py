@@ -2,11 +2,11 @@ import email
 from email import message
 from django.shortcuts import redirect, render
 # from matplotlib.style import context
-from core.models import Contact, Destination, Slider, State,News
+from core.models import Contact, Destination, Slider, State,News,Dataset
 from django.core.paginator import Paginator
 # from core.form import ContactForm
 # Create your views here.
-
+from django.db.models import Avg, Sum
 
 def index(request):
     state = ['ANDAMAN & NICOBAR ISLANDS',
@@ -72,6 +72,32 @@ def index(request):
     
     nw=News.objects.all()
 
+    overall_annual_rainfall = Dataset.objects.values('YEAR').annotate(average_rainfall=Avg('ANNUAL'))
+    
+    monthly_overall_rainfall = Dataset.objects.values('YEAR').annotate(JAN=Sum('JAN'),FEB=Sum('FEB'),MAR=Sum('MAR'),APR=Sum('APR'),MAY=Sum('MAY'),JUN=Sum('JUN'),JUL=Sum('JUL'),AUG=Sum('AUG'),SEP=Sum('SEP'),OCT=Sum('OCT'),NOV=Sum('NOV'),DEC=Sum('DEC'))
+    total_monthly_rainfall = {"Jan":0,"Feb":0,"Mar":0,"Apr":0,"May":0,"Jun":0,"Jul":0,"Aug":0,"Sep":0,"Oct":0,"Nov":0,"Dec":0}    
+
+    for item in monthly_overall_rainfall:
+        total_monthly_rainfall["Jan"] +=item["JAN"]
+        total_monthly_rainfall["Feb"] +=item["FEB"]
+        total_monthly_rainfall["Mar"] +=item["MAR"]
+        total_monthly_rainfall["Apr"] +=item["APR"]
+        total_monthly_rainfall["May"] +=item["MAY"]
+        total_monthly_rainfall["Jun"] +=item["JUN"]
+        total_monthly_rainfall["Jul"] +=item["JUL"]
+        total_monthly_rainfall["Aug"] +=item["AUG"]
+        total_monthly_rainfall["Sep"] +=item["SEP"]
+        total_monthly_rainfall["Oct"] +=item["OCT"]
+        total_monthly_rainfall["Nov"] +=item["NOV"]
+        total_monthly_rainfall["Dec"] +=item["DEC"]
+    monthly_rain = []
+    for item in total_monthly_rainfall.values():
+        monthly_rain.append(item/114)
+
+    overall_annual_rainfall_data = {}
+    for item in overall_annual_rainfall:
+        overall_annual_rainfall_data[item["YEAR"]] = item["average_rainfall"]
+        
     context = {
         'home': "active",
         'dests': dests,
@@ -79,7 +105,9 @@ def index(request):
         'slider': sl,
         "news":nw,
         "page_obj": page_obj,
-        "welcome":"Rainfall Home Page"
+        "welcome":"Rainfall Home Page",
+        "line_chart": overall_annual_rainfall_data,
+        "bar_chart": monthly_rain
     }
     return render(request, "index.html", context)
 
