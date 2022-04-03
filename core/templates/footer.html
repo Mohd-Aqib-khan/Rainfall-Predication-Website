@@ -13,9 +13,7 @@
         <div class="row profile-row  d-flex justify-content-center">
             <div class="col-lg-4">
                 <div class="card-profile p-0">
-                    <div class="card-image"> <img
-                            src="{% static 'about/aqib.jpg' %}"
-                            alt=""> </div>
+                    <div class="card-image"> <img src="{% static 'about/aqib.jpg' %}" alt=""> </div>
                     <div class="card-content d-flex flex-column align-items-center">
                         <h4 class="pt-2">Mohd Aqib Khan</h4>
                         <h5>Machine Learning Developer</h5>
@@ -32,9 +30,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="card-profile p-0">
-                    <div class="card-image"> <img
-                            src="{% static 'about/ram1.jpeg' %}"
-                            alt=""> </div>
+                    <div class="card-image"> <img src="{% static 'about/ram1.jpeg' %}" alt=""> </div>
                     <div class="card-content d-flex flex-column align-items-center">
                         <h4 class="pt-2">Rampravesh Chaudhari</h4>
                         <h5>Front End and Backend </h5>
@@ -66,6 +62,7 @@
                         <div class="newsletter_subtitle">Join our database NOW!
                         </div>
                     </div>
+
                     <div class="newsletter_form_container">
                         <form action="#"
                             class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between"
@@ -88,6 +85,22 @@
             </div>
         </div>
 
+
+        <div class="col-lg-6 col-md-6" style="margin: 100px auto; display: block;">
+            <form enctype="multipart/form-data" method="POST" action="{% url 'email' %}" style="text-align: center;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Subscribe to our Newsletter.</label>
+                    <input type="email" class="form-control" name="email" id="userEmail" placeholder="Enter email"
+                        required>
+                    <small style="font-weight: 600;color: red;" class="error"></small>
+                    <input type="text" class="form-control mt-2" name="name" id="userName" placeholder="Enter name"
+                        required>
+                    <small style="font-weight: 600;color: green;" class="success"></small>
+                </div>
+                <input type="submit" value="Subscribe" id="submit" class="btn newsletter_button">
+            </form>
+        </div>
 
 
 
