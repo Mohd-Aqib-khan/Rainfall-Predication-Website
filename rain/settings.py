@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'rain.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rainfall',
+        "USER":"root",
+        "PASSWORD":"rpc123",
+        "HOST":'localhost',
+        'PORT':"3306"
     }
 }
 
@@ -126,3 +131,11 @@ MEDIA_ROOT = BASE_DIR/'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# email setting
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT='587'
+EMAIL_HOST_USER='rickwarty@gmail.com'
+EMAIL_HOST_PASSWORD="Rampush123@$"
+EMAIL_USE_TLS=True

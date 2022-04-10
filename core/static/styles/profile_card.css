@@ -9,7 +9,6 @@
    margin: 0 !important;
    border-radius: 10px;
    overflow: hidden;
-   /* max-width: 254px; */
    width: 254px;
    max-height: 330px;
    cursor: pointer;
@@ -36,7 +35,7 @@
    backdrop-filter: blur(15px);
    min-height: 125px;
    width: 100%;
-   transition: bottom 0.4s ease-in;
+   transition: bottom .6s ease-in;
    box-shadow: 0 -10px 10px rgba(255, 255, 255, 0.1);
    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -48,14 +47,14 @@
 .card-profile:hover .card-content h4,
 .card-profile:hover .card-content h5 {
    transform: translateY(10px);
-   opacity: 1;
+   opacity: 4;
 }
 
 .card-profile .card-content h4,
 .card-profile .card-content h5 {
    font-size: 1.1rem;
    text-transform: uppercase;
-   letter-spacing: 3px;
+   letter-spacing: 2px;
    text-align: center;
    transition: 0.8s;
    font-weight: 500;
@@ -68,7 +67,7 @@
    transition: 0.5s;
    font-weight: 200;
    font-size: 0.8rem;
-   letter-spacing: 2px;
+   letter-spacing: 1px;
 }
 
 .card-profile .card-content .social-icons {
@@ -99,8 +98,50 @@
    .container {
       margin-top: 20px;
    }
+   .card-profile{
+      width: 180px;
+      max-height: 240px;
+   }
 
    .container .row .col-lg-4 {
       margin: 20px 0px;
    }
+
+   
+   .card-profile .card-content h4,
+   .card-profile .card-content h5 {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      transition: 0.8s;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-15px);
+      transition-delay: 0.2s;
+   }
+   .card-profile:hover .card-content .social-icons li {
+      transform: translateY(9px);
+   }
+
+   .card-profile .card-content h5 {
+      transition: 0.5s;
+      font-weight: 200;
+      font-size: 0.5rem;
+      letter-spacing: 1px;
+   }
+      
+   .card-profile .card-content {
+      position: absolute;
+      bottom: -180px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      min-height: 120px;
+      width: 100%;
+      transition: bottom .6s ease-in;
+      box-shadow: 0 -10px 10px rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+   }
+
 }

@@ -5,6 +5,7 @@ from email import message
 from email.policy import default
 from pyexpat import model
 from django.db import models
+from pytz import timezone
 # from matplotlib.pyplot import cla
 
 # Create your models here.
@@ -65,3 +66,10 @@ class Dataset(models.Model):
     Mar_May = models.FloatField(db_column='Mar-May')
     Jun_Sep = models.FloatField(db_column='Jun-Sep')
     Oct_Dec = models.FloatField(db_column='Oct-Dec')
+
+class SubscribedUsers(models.Model):
+    name=models.CharField(max_length=150)
+    email=models.CharField(unique=True,max_length=150)
+    datetime=models.DateTimeField(auto_now_add=True)
+    
+

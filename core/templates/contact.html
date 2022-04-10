@@ -59,25 +59,25 @@
                         {% csrf_token %}
                         <div style="margin-bottom: 18px">
                             <input type="text" class="contact_input contact_input_name inpt" placeholder="Your Name"
-                                required="required" name="names">
+                                required="required" name="c_names">
                             <div class="input_border"></div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6" style="margin-bottom: 18px">
                                 <div><input type="text" class="contact_input contact_input_email inpt"
-                                        placeholder="Your E-mail" required="required" name="email">
+                                        placeholder="Your E-mail" required="required" name="c_email">
                                     <div class="input_border"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6" style="margin-bottom: 18px">
                                 <div><input type="text" class="contact_input contact_input_subject inpt"
-                                        placeholder="Subject" required="required" name="subject">
+                                        placeholder="Subject" required="required" name="c_subject">
                                     <div class="input_border"></div>
                                 </div>
                             </div>
                         </div>
                         <div><textarea class="contact_textarea contact_input inpt" placeholder="Message"
-                                required="required" name="message"></textarea>
+                                required="required" name="c_message"></textarea>
                             <div class="input_border" style="bottom:3px"></div>
                         </div>
                         <button type="submit" class="contact_button">send</button>

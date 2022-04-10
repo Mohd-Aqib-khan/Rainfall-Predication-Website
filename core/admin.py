@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Contact, Destination, State, Slider,News,Dataset
+from core.models import Contact, Destination, State, Slider,News,Dataset,SubscribedUsers
 # Register your models here.
 
 
@@ -19,7 +19,12 @@ class NewsAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('id','name', 'email','subject','message','date')
+    
 
+@admin.register(SubscribedUsers)
+class SubscribeedUsersAdmin(admin.ModelAdmin):
+    list_display = ('id','name',"email","datetime")
+    
 @admin.register(Dataset)
 class DatasetAdmin(admin.ModelAdmin):
     list_display = ('id','SUBDIVISION','YEAR','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','ANNUAL',"Jan_Feb","Mar_May","Jun_Sep","Oct_Dec")

@@ -8,3 +8,7 @@
    padding-left: 1rem;
    padding-right: 1rem;
 }
+body .rain-predict{
+   height: 100vh !important;
+   width: 100%;
+}

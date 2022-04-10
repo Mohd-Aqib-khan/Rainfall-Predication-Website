@@ -11,6 +11,7 @@ import pandas as pd
 def stateComparsion(request):
     # os.chdir("D:\\DataSet")
     stateName = Dataset.objects.values_list('SUBDIVISION', flat=True).distinct()
+    
     dataset = Dataset.objects.all()
     json_dataset=serializers.serialize("json",dataset)
     
