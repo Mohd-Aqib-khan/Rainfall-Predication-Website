@@ -181,9 +181,11 @@
   const rawDataset = {{data.state_data | safe}};
   let dataset = [];
   rawDataset.forEach((value,index)=>{
-    dataset.push([value.fields.YEAR,value.fields.JAN,value.fields.FEB,value.fields.MAR,value.fields.APR,value.fields.MAY,value.fields.JUN,value.fields.JUL,value.fields.AUG,value.fields.SEP,value.fields.OCT,value.fields.NOV,value.fields.DEC,value.fields.ANNUAL,value.fields.Jan_Feb,value.fields.Mar_May,value.fields.Jun_Sep,value.fields.Oct_Dec])
+    dataset.push([value.fields.YEAR,value.fields.JAN,value.fields.FEB,value.fields.MAR,value.fields.APR,value.fields.MAY,value.fields.JUN,value.fields.JUL,value.fields.AUG,value.fields.SEP,value.fields.OCT,value.fields.NOV,value.fields.DEC,value.fields.ANNUAL,value.fields.Jan_Feb,value.fields.Mar_May,value.fields.Jun_Sep,value.fields.Oct_Dec,value.fields.Latitude,value.fields.Longitude])
   })
   const col = {{data.columns | safe}};
+  col.push("Latitude");
+  col.push("Longitude");
   const grid = new gridjs.Grid({
     columns: col,
     data: dataset,
