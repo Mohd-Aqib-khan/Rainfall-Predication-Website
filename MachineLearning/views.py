@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from core.models import State,Dataset
+from core.models import State,Dataset,RegionDataset
 from django.core import serializers
 from django.db.models import Avg, Count
 import json as simplejson
@@ -9,22 +9,25 @@ import pandas as pd
 
 
 def stateComparsion(request):
-    # os.chdir("D:\\DataSet")
-    stateName = Dataset.objects.values_list('SUBDIVISION', flat=True).distinct()
-    dataset = Dataset.objects.all()
-    json_dataset=serializers.serialize("json",dataset)
-    
-    # os.chdir("D:\\DataSet")
+    # os.chdir("D:\\RegionDataset")
+    stateName = RegionDataset.objects.values_list('SUBDIVISION', flat=True).distinct()
+    dataset = RegionDataset.objects.all()
+    All_Region_Rainfall_data = RegionDataset.objects.values('SUBDIVISION').annotate(ANNUAL=Avg('ANNUAL'),JAN=Avg('JAN'),FEB=Avg('FEB'),MAR=Avg('MAR'),APR=Avg('APR'),MAY=Avg('MAY'),JUN=Avg('JUN'),JUL=Avg('JUL'),AUG=Avg('AUG'),SEP=Avg('SEP'),OCT=Avg('OCT'),NOV=Avg('NOV'),DEC=Avg('DEC'),Jan_Feb=Avg('Jan_Feb'),Mar_May=Avg('Mar_May'),Jun_Sep=Avg('Jun_Sep'),Oct_Dec=Avg('Oct_Dec'))
+    json_RegionDataset=serializers.serialize("json",dataset)
+    # print("data:- ",All_Region_Rainfall_data)
+    # os.chdir("D:\\RegionDataset")
     # df = pd.read_csv("rainfall_in_india.csv")
     # annual_rain_d, year_d = seperatingData(df)
+
     # df = removingNull(df, annual_rain_d, year_d)
     # annual_rain_d, year_d = seperatingData(df)
     # annual_data = simplejson.dumps(annual_rain_d)
     # list_state = list(annual_rain_d.keys())
     parameter = ["ANNUAL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]
     data = {
-        "dataset": json_dataset,
+        "RegionDataset": json_RegionDataset,
         "stateList": list(stateName),
+        "AllRegionData":list(All_Region_Rainfall_data),
         "parameter": parameter
     }
     # return HttpResponse("Hello, world. You're at the polls index.")
@@ -40,8 +43,8 @@ def state_view(request, sid):
     # Loading Data from local disk 
     
     s = State.objects.get(pk=sid)
-    A_N=Dataset.objects.filter(SUBDIVISION=s.name)
-    All_State_Annual_Rainfall = Dataset.objects.values('SUBDIVISION').annotate(average_rainfall=Avg('ANNUAL'))
+    A_N=RegionDataset.objects.filter(SUBDIVISION=s.name)
+    All_State_Annual_Rainfall = RegionDataset.objects.values('SUBDIVISION').annotate(average_rainfall=Avg('ANNUAL'))
     All_State_Data = []
     All_State_Annual_Rainfall_data = []
     for item in All_State_Annual_Rainfall:
@@ -54,9 +57,9 @@ def state_view(request, sid):
     Grid_Table_data=serializers.serialize("json",A_N)
     annual_rainfall_data = A_N.values_list('YEAR', 'ANNUAL')
     linear_chart_data = simplejson.dumps(dict(annual_rainfall_data))
-    mouthily_rainfall_data = Dataset.objects.filter(SUBDIVISION=s.name).aggregate(JAN=Avg('JAN'),FEB=Avg('FEB'),MAR=Avg('MAR'),APR=Avg('APR'),MAY=Avg('MAY'),JUN=Avg('JUN'),JUL=Avg('JUL'),AUG=Avg('AUG'),SEP=Avg('SEP'),OCT=Avg('OCT'),NOV=Avg('NOV'),DEC=Avg('DEC'))
+    mouthily_rainfall_data = RegionDataset.objects.filter(SUBDIVISION=s.name).aggregate(JAN=Avg('JAN'),FEB=Avg('FEB'),MAR=Avg('MAR'),APR=Avg('APR'),MAY=Avg('MAY'),JUN=Avg('JUN'),JUL=Avg('JUL'),AUG=Avg('AUG'),SEP=Avg('SEP'),OCT=Avg('OCT'),NOV=Avg('NOV'),DEC=Avg('DEC'))
     
-    sessional_rainfall_data =  Dataset.objects.filter(SUBDIVISION=s.name).aggregate(Jan_Feb=Avg('Jan_Feb'),Mar_May=Avg('Mar_May'),Jun_Sep=Avg('Jun_Sep'),Oct_Dec=Avg('Oct_Dec'))
+    sessional_rainfall_data =  RegionDataset.objects.filter(SUBDIVISION=s.name).aggregate(Jan_Feb=Avg('Jan_Feb'),Mar_May=Avg('Mar_May'),Jun_Sep=Avg('Jun_Sep'),Oct_Dec=Avg('Oct_Dec'))
     
     json_columns = simplejson.dumps(
         ['YEAR', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',"ANNUAL","Jan_Feb","Mar_May","Jun_Sep","Oct_Dec"])
@@ -76,17 +79,15 @@ def state_view(request, sid):
     return render(request, 'machineLearning/state_view.html', {"data": data,"welcome":"State View"})
 # machineLearning/state_view.html
 
-# os.chdir("D:\\DataSet")
-# df = pd.read_csv("rainfall_in_india.csv")
-# annual_rain_d, year_d = seperatingData(df)
-# df = removingNull(df, annual_rain_d, year_d)
-# annual_rain_d, year_d = seperatingData(df)
-# for i in annual_rain_d.keys():
-#     for a in range(len(annual_rain_d[i][0])):
-#         c = Dataset(SUBDIVISION=i, YEAR=year_d[i][a], JAN=annual_rain_d[i][1][a], FEB=annual_rain_d[i][2][a], MAR=annual_rain_d[i][3][a], APR=annual_rain_d[i][4][a], MAY=annual_rain_d[i][5][a], JUN=annual_rain_d[i][6][a], JUL=annual_rain_d[i]
-#                     [7][a], AUG=annual_rain_d[i][8][a], SEP=annual_rain_d[i][9][a], OCT=annual_rain_d[i][10][a], NOV=annual_rain_d[i][11][a], DEC=annual_rain_d[i][12][a], ANNUAL=annual_rain_d[i][0][a], Jan_Feb=annual_rain_d[i][14][a], Mar_May=annual_rain_d[i][15][a], Jun_Sep=annual_rain_d[i][16][a], Oct_Dec=annual_rain_d[i][17][a])
-#         c.save()
+# os.chdir("C:\\Users\\AQIB\\Downloads\\ML")
+# df = pd.read_csv("Rainfall RegionDataset 2020 - Rainfall_Data_LL.csv")
+# arr = df.to_numpy()
+# list_arr = arr.tolist()
+# for row in list_arr:
+#     c = RegionRegionDataset(SUBDIVISION=row[0].upper(), YEAR=row[1], JAN=row[2], FEB=row[3], MAR=row[4], APR=row[5], MAY=row[6], JUN=row[7], 
+#     JUL=row[8], AUG=row[9], SEP=row[10], OCT=row[11], NOV=row[12], DEC=row[13], ANNUAL=row[14], Jan_Feb=row[15], Mar_May=row[16], Jun_Sep=row[17], Oct_Dec=row[18],Latitude=row[19],Longitude=row[20])
+#     c.save()
 
-# A_N=Dataset.objects.filter(SUBDIVISION="ANDAMAN & NICOBAR ISLANDS")
+# A_N=RegionDataset.objects.filter(SUBDIVISION="ANDAMAN & NICOBAR ISLANDS")
 # post_list=serializers.serialize("json",A_N)
 # print(post_list)

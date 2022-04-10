@@ -47,6 +47,24 @@
                             </li>
                             {% endfor %}
                         </ul>
+                        {% comment %} <canvas id="myChart" width="700" height="600" style="left: 0;
+                        right: 0;
+                        padding: 15px;
+                        background-color: white;
+                        display: none;
+                        margin-left: auto;
+                        margin-right: auto;">
+                        </canvas> {% endcomment %}
+                    </div>
+                    <div class="row mt-4" id="firststateDetial" style="display: none;">
+                        <div class="card" style="width: 19rem;">
+                            <canvas id="myFirstStateLineChart" width="250" height="300"></canvas>
+                            <div class="card-body mt-3" style="padding: 0;">
+                              <h5 class="card-title" id="first-state-title"></h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <div id="wrapperFirst"></div>
+                            </div>
+                          </div>
                     </div>
 
                 </div>
@@ -60,39 +78,49 @@
                     </div>
                     <div class="row">
                         <ul id="stateSecond2" class="col-md-5" style="position: relative; max-height: 377px;
-                width: 100%;
-                display:none;
-                overflow-y: scroll;
-                background-color: white;
-                margin-top: -10px;">
+                            width: 100%;
+                            display:none;
+                            overflow-y: scroll;
+                            background-color: white;
+                        margin-top: -10px;">
                             {% for item in data.stateList %}
                             <li style="margin-bottom: 5px;">
                                 <button class="" type="button" onclick="check(2,{{forloop.counter0}})" style="
-                    width: -webkit-fill-available;
-                    border-radius: 14px;
-                    height: 50px;
-                    background: #f2f5f6;
-                    border: none;
-                    outline: none;
-                    padding-left: 17px;
-                    font-family: 'Oswald', sans-serif;
-                    font-size: 14px !important;
-                    font-weight: 500 !important;
-                    color: #72728c !important;
-                    text-align: center;
-                    padding-right: 15px;
-                    padding-top: 14px;
-                ">
+                                width: -webkit-fill-available;
+                                border-radius: 14px;
+                                height: 50px;
+                                background: #f2f5f6;
+                                border: none;
+                                outline: none;
+                                padding-left: 17px;
+                                font-family: 'Oswald', sans-serif;
+                                font-size: 14px !important;
+                                font-weight: 500 !important;
+                                color: #72728c !important;
+                                text-align: center;
+                                padding-right: 15px;
+                                padding-top: 14px;
+                                ">
                                     <pre style="font-family: 'Oswald', sans-serif;
-                        font-size: 14px !important;
-                        margin-left: 0px;
-                        text-align: center;
-                        font-weight: 500 !important;">{{item | safe}}</pre>
+                                    font-size: 14px !important;
+                                    margin-left: 0px;
+                                    text-align: center;
+                                    font-weight: 500 !important;">{{item | safe}}</pre>
                                 </button>
                             </li>
                             {% endfor %}
                         </ul>
 
+                    </div>
+                    <div class="row mt-4" id="secondstateDetail" style = "display: none;">
+                        <div class="card" style="width: 19rem;">
+                            <canvas id="mySecondStateLineChart" width="250" height="300"></canvas>
+                                <div class="card-body mt-3" style="padding: 0;">
+                                  <h5 class="card-title" id="second-state-title"></h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <div id="wrapperSecond"></div>
+                                </div>
+                        </div>
                     </div>
                 </div>
 
@@ -163,6 +191,7 @@
 </div>
 
 <script>
+    const datasets = {{data.RegionDataset | safe}};
     let myChart = "";
     let stateFirst = "";
     let stateSecond = "";
@@ -170,9 +199,12 @@
     let count = 0;
     let arr = {{data.stateList | safe}};
     let arrparameter = {{data.parameter | safe}};
+    const firstStateTitle = document.getElementById("first-state-title");
+    const secondStateTitle = document.getElementById("second-state-title");
+    const firstStateCard = document.getElementById("firststateDetial");
+    const secondStateCard = document.getElementById("secondstateDetail");
 
     function showList(index) {
-        console.log("show working ");
         if (index == 0) {
 
             document.getElementById("stateFirst1").style.display = "block";
@@ -206,11 +238,64 @@
             document.getElementById("firstState").value = arr[stateIndex];
             document.getElementById("stateFirst1").style.display = "none";
             stateFirst = arr[stateIndex];
+            firstStateCard.style.display = "block";
+            console.log("state First",stateFirst);
+            firstStateTitle.innerHTML = arr[stateIndex];
+            console.log("dataset:-",datasets);
+            const allRegionData = {{data.AllRegionData | safe}};
+            const dataLine = []
+            datasets.forEach((value,index)=>{
+                if(value.fields.SUBDIVISION==stateFirst){
+                    console.log("Year:-",value.fields.YEAR);
+                    dataLine.push({
+                        x:value.fields.YEAR,
+                        y:value.fields.ANNUAL
+                    })
+                }
+            })
+            lineChart(dataLine, '#2266a8', "myFirstStateLineChart",stateFirst);
+            allRegionData.forEach((value,index)=>{
+                if(value.SUBDIVISION==stateFirst){
+                    const data = Object.entries(value);
+                    data.shift();
+                    data.map((value)=>{
+                        value[1] = parseFloat(value[1]).toFixed(2);
+                        return value;
+                    })
+                    table(data,["Parameter","Value (Avg)"],"wrapperFirst",4);
+                }
+            }) 
+            console.log("all dAta:-",allRegionData);
             //document.getElementById("stateSecond2").style.left = "455px";
         } else if (num == 2) {
             document.getElementById("secondState").value = arr[stateIndex];
             stateSecond = arr[stateIndex];
             document.getElementById("stateSecond2").style.display = "none";
+            secondStateCard.style.display = "block";
+            console.log("stateSecond:-",stateSecond);
+            secondStateTitle.innerHTML = stateSecond;
+            const allRegionData = {{data.AllRegionData | safe}};
+            const dataLine = []
+            datasets.forEach((value,index)=>{
+                if(value.fields.SUBDIVISION==stateSecond){
+                    dataLine.push({
+                        x:value.fields.YEAR,
+                        y:value.fields.ANNUAL
+                    })
+                }
+            })
+            lineChart(dataLine, '#f67019', "mySecondStateLineChart",stateSecond);
+            allRegionData.forEach((value,index)=>{
+                if(value.SUBDIVISION==stateSecond){
+                    const data = Object.entries(value);
+                    data.shift();
+                    data.map((value)=>{
+                        value[1] = parseFloat(value[1]).toFixed(2);
+                        return value;
+                    })
+                    table(data,["Parameter","Value (Avg)"],"wrapperSecond",4);
+                }
+            }) 
         } else if (num == 3) {
             document.getElementById("parameterListItem").value = arrparameter[stateIndex];
             para = arrparameter[stateIndex];
@@ -224,7 +309,8 @@
         document.getElementById("stateFirst1").style.display = "none";
         document.getElementById("stateSecond2").style.display = "none";
         document.getElementById("paraMeter").style.display = "none";
-
+        firstStateCard.style.display = "none";
+        secondStateCard.style.display = "none";
 
 
 
@@ -235,7 +321,7 @@
         count = 1;
         // auto formatted data 3
         //dataset = {{data.datasets | safe}};
-        const datasets = {{data.dataset | safe}};
+        
 
         //const da1 = dataset[stateFirst][arrparameter.indexOf(para)];
         let da1 = [];
