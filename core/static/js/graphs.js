@@ -1,4 +1,4 @@
-function lineChart(data, colour, id,name) {
+function lineChart(data, colour, id,name){
     const totalDuration = 10000;
     const delayBetweenPoints = totalDuration / data.length;
     const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx
@@ -72,4 +72,5 @@ function lineChart(data, colour, id,name) {
             }
         }
     });
+    return myChart;
 }

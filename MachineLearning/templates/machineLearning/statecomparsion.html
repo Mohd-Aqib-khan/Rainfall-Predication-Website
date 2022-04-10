@@ -195,8 +195,14 @@
     let myChart = "";
     let stateFirst = "";
     let stateSecond = "";
+    let myFirstStateChart = "";
+    let mySecondStateChart = "";
+    let gridFirst = "";
+    let gridSecond = "";
     let para = "";
     let count = 0;
+    let viewFirstStateCard = 0;
+    let viewSecondStateCard = 0;
     let arr = {{data.stateList | safe}};
     let arrparameter = {{data.parameter | safe}};
     const firstStateTitle = document.getElementById("first-state-title");
@@ -239,21 +245,24 @@
             document.getElementById("stateFirst1").style.display = "none";
             stateFirst = arr[stateIndex];
             firstStateCard.style.display = "block";
-            console.log("state First",stateFirst);
             firstStateTitle.innerHTML = arr[stateIndex];
-            console.log("dataset:-",datasets);
             const allRegionData = {{data.AllRegionData | safe}};
             const dataLine = []
             datasets.forEach((value,index)=>{
                 if(value.fields.SUBDIVISION==stateFirst){
-                    console.log("Year:-",value.fields.YEAR);
                     dataLine.push({
                         x:value.fields.YEAR,
                         y:value.fields.ANNUAL
                     })
                 }
             })
-            lineChart(dataLine, '#2266a8', "myFirstStateLineChart",stateFirst);
+            if(myFirstStateChart!=""){
+                myFirstStateChart.destroy();
+                myFirstStateChart = lineChart(dataLine, '#2266a8', "myFirstStateLineChart",stateFirst);
+            }
+            else{
+                myFirstStateChart =  lineChart(dataLine, '#2266a8', "myFirstStateLineChart",stateFirst);
+            }
             allRegionData.forEach((value,index)=>{
                 if(value.SUBDIVISION==stateFirst){
                     const data = Object.entries(value);
@@ -262,17 +271,23 @@
                         value[1] = parseFloat(value[1]).toFixed(2);
                         return value;
                     })
-                    table(data,["Parameter","Value (Avg)"],"wrapperFirst",4);
+                    if(gridFirst==""){
+                        gridFirst = table(data,["Parameter","Value (Avg)"],"wrapperFirst",4);
+                        console.log("grid",gridFirst);
+                    }else{
+                        gridFirst.updateConfig({
+                            data: data
+                        }).forceRender();
+                    }
+
                 }
             }) 
-            console.log("all dAta:-",allRegionData);
             //document.getElementById("stateSecond2").style.left = "455px";
         } else if (num == 2) {
             document.getElementById("secondState").value = arr[stateIndex];
             stateSecond = arr[stateIndex];
             document.getElementById("stateSecond2").style.display = "none";
             secondStateCard.style.display = "block";
-            console.log("stateSecond:-",stateSecond);
             secondStateTitle.innerHTML = stateSecond;
             const allRegionData = {{data.AllRegionData | safe}};
             const dataLine = []
@@ -284,7 +299,13 @@
                     })
                 }
             })
-            lineChart(dataLine, '#f67019', "mySecondStateLineChart",stateSecond);
+            if(mySecondStateChart !=""){
+                mySecondStateChart.destroy();
+                mySecondStateChart = lineChart(dataLine, '#f67019', "mySecondStateLineChart",stateSecond);    
+            }else{
+                mySecondStateChart = lineChart(dataLine, '#f67019', "mySecondStateLineChart",stateSecond);
+            }
+            
             allRegionData.forEach((value,index)=>{
                 if(value.SUBDIVISION==stateSecond){
                     const data = Object.entries(value);
@@ -293,7 +314,14 @@
                         value[1] = parseFloat(value[1]).toFixed(2);
                         return value;
                     })
-                    table(data,["Parameter","Value (Avg)"],"wrapperSecond",4);
+                    if(gridSecond==""){
+                        gridSecond = table(data,["Parameter","Value (Avg)"],"wrapperSecond",4);
+                    }else{
+                        gridSecond.updateConfig({
+                            data: data
+                        }).forceRender();
+                    }
+
                 }
             }) 
         } else if (num == 3) {
@@ -301,7 +329,6 @@
             para = arrparameter[stateIndex];
             document.getElementById("paraMeter").style.display = "none";
         }
-        console.log("state Name is :-", arr[stateIndex]);
     }
 
     function fetchData() {
@@ -311,10 +338,6 @@
         document.getElementById("paraMeter").style.display = "none";
         firstStateCard.style.display = "none";
         secondStateCard.style.display = "none";
-
-
-
-
         if (count == 1) {
             myChart.destroy();
         }
@@ -347,9 +370,6 @@
         // auto formatted data 4
         let data = da1;
         let data2 = da2;
-        console.log("Param", para);
-        console.log("data:-", data);
-        console.log("data2:-", data); 
         const totalDuration = 10000;
         const delayBetweenPoints = totalDuration / data.length;
         const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart
@@ -474,6 +494,36 @@
 
 
 
+    }
+</script>
+<script>
+    function table(dataset, col, id, limitValue) {
+        const grid = new gridjs.Grid({
+            columns: col,
+            data: dataset,
+            pagination: {
+                enabled: true,
+                limit: limitValue,
+                summary: false
+            },
+            style: {
+                table: {
+                    border: '3px solid #ccc'
+                },
+                th: {
+                    'background-color': 'rgba(0, 0, 0, 0.1)',
+                    color: '#000',
+                    'border-bottom': '3px solid #ccc',
+                    'text-align': 'center'
+                },
+                td: {
+                    'text-align': 'center',
+                    'width': "10px"
+                }
+            }
+        }).render(document.getElementById(id));
+        console.log("grid from gridTable:-", grid);
+        return grid;
     }
 </script>
 {% endblock content %}
