@@ -1,3 +1,5 @@
-.statecmp{
-    min-height: 40rem;
+@media screen and (max-width:992px) {
+    .container-fluid .card-width {
+        width: 100% !important;
+    }
 }
