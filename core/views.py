@@ -1,6 +1,6 @@
 import email
 from email import message
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render,HttpResponseRedirect
 # from matplotlib.style import context
 from core.models import Contact, Destination, Slider, State,News,Dataset
 from django.core.paginator import Paginator
@@ -133,3 +133,6 @@ def contact(request):
 
 def about(request):
     return render(request, 'about.html', {'about': "active",'welcome':"About Us Page"})
+
+def sign_up(request):
+    return render(request,'signup.html')
