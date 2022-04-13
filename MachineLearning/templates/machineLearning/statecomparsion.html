@@ -504,8 +504,8 @@
             console.log("columns:-",columns);
             myChart = barChart([...data1],[...data2],"myBarChart" ,stateFirst,stateSecond,columns); 
         }else if(type=="pie"){
-            document.getElementById("myChart").style.display = "block";
-            document.getElementById("myBarChart").style.display = "none";
+            document.getElementById("myChart").style.display = "none";
+            document.getElementById("myBarChart").style.display = "block";
             let data1 = [];
             let data2 = [];
             allRegionData.forEach((value, index) => {
@@ -518,7 +518,7 @@
                     console.log("data2:-",data2);
                 }
             })
-            myChart = pieChart([...data1, ...data2], "myChart", stateFirst, stateSecond, para);
+            myChart = pieChart([...data1, ...data2], "myBarChart", stateFirst, stateSecond, para);
         }
         
 
