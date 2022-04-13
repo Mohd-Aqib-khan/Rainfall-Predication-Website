@@ -1,5 +1,48 @@
-function barChart(data, id, col,name){
-    debugger;
+function pieChart(data, id, statename1, statename2, name) {
+    let pie_data = data
+    const ctxPie = document.getElementById(id).getContext('2d');
+    const myChartPie = new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: [statename1, statename2],
+            datasets: [{
+                label: name,
+                data: pie_data,
+                backgroundColor: [
+                    'rgba(255, 99, 142, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                ],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Pie Chart Reprsentation'
+                },
+            },
+        }
+    });
+    return myChartPie;
+}
+
+function barChart(data1, data2, id, statename1, statename2, name) {
+    let col = [];
+    let dat1 = [];
+    let dat2 = [];
+    name.forEach((value, index) => {
+        col.push(value);
+    })
+    data1.forEach((value, index) => {
+        dat1.push(value);
+    })
+    data2.forEach((value, index) => {
+        dat2.push(value);
+    })
     const ctxLine2 = document.getElementById(id).getContext('2d');
     const mybarChart = new Chart(ctxLine2, {
         type: 'bar',
@@ -7,58 +50,22 @@ function barChart(data, id, col,name){
             labels: col,
             datasets: [
                 {
-                    label: name,
+                    label: statename1,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
-                    data: data,
+                    data: dat1,
                     borderWidth: 1
                 },
-                // {
-                //     label: name,
-                //     backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                //     borderColor: 'rgba(54, 162, 235, 1)',
-                //     data: data[1],
-                //     borderWidth: 1
-                // },
-                
-                //{
-                /* barPercentage: 0.5,
-                barThickness: 6,
-                maxBarThickness: 8,
-                minBarLength: 2,*/
-                // data: annual_bar_data,
-                // backgroundColor: [
-                //     'rgba(255, 99, 132, 0.2)',
-                //     'rgba(54, 162, 235, 0.2)',
-                //     'rgba(255, 206, 86, 0.2)',
-                //     'rgba(75, 192, 192, 0.2)',
-                //     'rgba(153, 102, 255, 0.2)',
-                //     'rgba(255, 159, 64, 0.2)'
-                // ],
-                // borderColor: [
-                //     'rgba(255, 99, 132, 1)',
-                //     'rgba(54, 162, 235, 1)',
-                //     'rgba(255, 206, 86, 1)',
-                //     'rgba(75, 192, 192, 1)',
-                //     'rgba(153, 102, 255, 1)',
-                //     'rgba(255, 159, 64, 1)'
-                // ],
-                // borderWidth: 1
-            //}
+                {
+                    label: statename2,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    data: dat2,
+                    borderWidth: 1
+                }
             ]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Rainfall Comparesion of two State'
-                },
-            },
             scales: {
                 y: {
                     beginAtZero: true
