@@ -1,8 +1,7 @@
 from django.urls import path
-
 from MachineLearning import views
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
-    path('statecomparsion/', views.stateComparsion, name='statecomparsion'),
+    path('statecmp/', views.stateComparsion, name='statecmp'),
+    path('stateview/<int:sid>/', views.state_view, name='stateview')
 ]
